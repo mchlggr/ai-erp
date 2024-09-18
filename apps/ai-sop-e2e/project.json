@@ -1,0 +1,9 @@
+{
+  "name": "ai-sop-e2e",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/ai-sop-e2e/src",
+  "tags": [],
+  "implicitDependencies": ["ai-sop"],
+  "// targets": "to see all targets run: nx show project ai-sop-e2e --web",
+  "targets": {}
+}
