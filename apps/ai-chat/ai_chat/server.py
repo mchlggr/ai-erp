@@ -11,7 +11,10 @@ environment = os.getenv("ENVIRONMENT", "development")
 debug = environment == "development"
 docs_url = "/docs"
 
-origins = []
+origins = [
+  "http://localhost:3000",
+  "http://localhost:8000",
+]
 
 if environment == "development":
     # Below are used for dev purposes on localhost

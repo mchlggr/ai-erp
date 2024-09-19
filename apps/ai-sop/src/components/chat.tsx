@@ -4,7 +4,10 @@ import { AiChat } from '@nlux/react';
 import { ChatAdapterOptions, useChatAdapter } from '@nlux/langchain-react';
 
 const adapterOptions: ChatAdapterOptions<unknown> = {
-  url: 'https://pynlux.api.nlkit.com/pirate-speak'
+  // dataTransferMode: 'batch',
+  url: 'http://127.0.0.1:8000/pirate-speak'
+  // url: '/chat/pirate-speak'
+  // url: '/pirate-speak'
 };
 
 const Chat = () => {
