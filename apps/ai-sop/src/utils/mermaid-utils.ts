@@ -10,14 +10,14 @@ import {
 export async function parseMermaidCode(
   mermaidCode: string
 ): Promise<{ nodes: Node[]; edges: Edge[] }> {
-  console.log('mermaidCode');
-  console.log(mermaidCode);
+  // console.log('mermaidCode');
+  // console.log(mermaidCode);
   // Render the Mermaid code and invoke the callback
   const filteredCode = removeDoubleQuoteInsideParentheses(
     removeDoubleQuoteInsideBrackets(removeMarkdowncode(mermaidCode))
   );
-  console.log('filteredCode');
-  console.log(filteredCode);
+  // console.log('filteredCode');
+  // console.log(filteredCode);
   let svgCode: any;
 
   try {
@@ -41,7 +41,7 @@ const convertToReactFlowElements = (
   edges: Edge[];
 } => {
   // Now, you have the SVG code in the svgCode variable.
-  console.log(svgCode);
+  // console.log(svgCode);
 
   // Create a dummy div element to parse the SVG code as HTML
   const dummyDiv = document.createElement('div');
@@ -50,7 +50,7 @@ const convertToReactFlowElements = (
   // Select nodes and edges from the SVG
   const mermaidNodes = Array.from(dummyDiv.querySelectorAll('.node'));
   const mermaidEdges = Array.from(dummyDiv.querySelectorAll('.edgePaths path'));
-  console.log("mermaidEdges", mermaidEdges)
+  // console.log("mermaidEdges", mermaidEdges)
 
   // Initialize an array to store React-Flow elements
   const nodes: Node[] = [];
@@ -110,7 +110,7 @@ const convertToReactFlowElements = (
   });
 
   // Now, you have reactFlowElements containing the data in the format expected by React-Flow.
-  console.log(nodes, edges); // Print for demonstration
+  // console.log(nodes, edges); // Print for demonstration
   return {
     nodes,
     edges,

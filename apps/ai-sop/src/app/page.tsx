@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Chat } from '../components/chat';
 import Diagram from '../components/diagram';
 
@@ -32,17 +32,36 @@ Button --> Error
 Success --> Finish
 Error --> Finish`;
 
+const simpleTD = `graph TD
+    A(Start) --> B(Activity)
+    B --> C(Activity)
+    C --> D(Activity)
+    D --> E(Activity)
+    E --> F(Activity)
+    F --> G(End)
+`
+
+const mcdonalds = `graph TD
+A[Enter McDonald's] --> B{Are you dining in or taking out?}
+B --> |Dining in| C[Choose a table]
+B --> |Taking out| D[Place order at counter]`
 
 
 export default function Index() {
 
-  const [diagram,  setDiagram] = useState(sampleMermaidCode2)
+  const [diagram,  setDiagram] = useState(mcdonalds)
   const [isComplete, setIsComplete] = useState(true)
+
+  const onMessageReceived = useCallback((message: string) => {
+    console.log('onMessageReceived/message', message)
+    setDiagram(message)
+  }, [])
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
       <Diagram isComplete={isComplete} mermaidCode={diagram} />
       <Chat
+        onMessageReceived={onMessageReceived}
         className={'absolute bottom-0 left-0 right-0'}
       />
     </div>

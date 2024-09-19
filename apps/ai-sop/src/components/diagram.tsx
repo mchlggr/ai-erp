@@ -18,9 +18,10 @@ import {
   MarkerType, MiniMap, useNodesState, useEdgesState
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-
+import FlowView from './flow-view';
 import { CustomNode } from './custom-node';
 import { parseMermaidCode } from '../utils/mermaid-utils';
+import { parseMermaidChart } from '@ai-erp/mermaid-flow';
 
 interface DiagramProps {
   mermaidCode?: string;
@@ -36,21 +37,37 @@ const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }]
 
 const Diagram = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
 
+
   useEffect(() => {
     async function parse() {
-      const { nodes, edges } = await parseMermaidCode(mermaidCode);
-      console.log('nodes', nodes);
+      const { nodes, edges, direction} = await parseMermaidChart(mermaidCode);
+      console.log('texthowere/nodes', nodes);
       console.log('edges', edges);
+      console.log("/direction", direction)
       setEdges(edges);
       setNodes(nodes);
+      setDirection(direction);
     }
     if (isComplete && mermaidCode) {
       parse();
     }
   }, [mermaidCode, isComplete]);
+  // useEffect(() => {
+  //   async function parse() {
+  //     const { nodes, edges } = await parseMermaidCode(mermaidCode);
+  //     console.log('nodes', nodes);
+  //     console.log('edges', edges);
+  //     setEdges(edges);
+  //     setNodes(nodes);
+  //   }
+  //   if (isComplete && mermaidCode) {
+  //     parse();
+  //   }
+  // }, [mermaidCode, isComplete]);
 
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
+  const [direction, setDirection] = useState<string>("LR");
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
@@ -83,20 +100,21 @@ const Diagram = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
   }, [])
 
   return (
-    <ReactFlow
+    <FlowView
       nodes={nodes}
-      onNodesChange={onNodesChange}
-      edges={[
-        { id: 'e1-2', source: 'Start', target: 'Username' },
-      ]}
-      onEdgesChange={onEdgesChange}
-      onConnect={onConnect}
-      nodeTypes={nodeTypes}
+      // onNodesChange={onNodesChange}
+      edges={edges}
+      // edges={[
+      //   { id: 'e1-2', source: 'Start', target: 'Username' },
+      // ]}
+      // onEdgesChange={onEdgesChange}
+      // onConnect={onConnect}
+      // nodeTypes={nodeTypes}
     >
       {/*<MiniMap/>*/}
       <Background variant="dots" gap={12} size={1} />
       {/*<Controls />*/}
-    </ReactFlow>
+    </FlowView>
   );
 };
 

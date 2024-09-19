@@ -1,42 +1,55 @@
 'use client';
 
-import { AiChat } from '@nlux/react';
+import { AiChat, useAiChatApi } from '@nlux/react';
 import { ChatAdapterOptions, useChatAdapter } from '@nlux/langchain-react';
 import { PersonaOptions } from '@nlux/react';
+import { useCallback } from 'react';
 
 export const personasOptions: PersonaOptions = {
   user: {
-    name: 'Alex',
-    avatar: 'https://docs.nlkit.com/nlux/images/personas/alex.png'
+    name: 'Me',
+    // avatar: 'https://docs.nlkit.com/nlux/images/personas/alex.png'
   },
   assistant: {
-    name: 'Feather-AI',
-    avatar: 'https://docs.nlkit.com/nlux/images/personas/feather.png',
-    tagline: 'Yer AI First Mate!'
+    name: 'Assistant',
+    // avatar: 'https://docs.nlkit.com/nlux/images/personas/feather.png',
+    // tagline: 'Yer AI First Mate!'
   }
 };
 
 const adapterOptions: ChatAdapterOptions<unknown> = {
-  dataTransferMode: 'stream',
+  dataTransferMode: 'batch',
   url: 'http://127.0.0.1:8000/diagram'
 };
 
 
 interface ChatProps {
   className?: string;
+  onMessageReceived: (message: string) => void;
 }
 
-const Chat = ({ className }: ChatProps) => {
-  const langServeAdapter = useChatAdapter(adapterOptions);
+const Chat = ({ className, onMessageReceived }: ChatProps) => {
+  const adapter = useChatAdapter(adapterOptions);
+  const api = useAiChatApi();
+  const onResetClick = useCallback(() => api.conversation.reset(), [api]);
+  const onSendClick = useCallback(() => api.composer.send('This is the reset message'), [api]);
+  const messageReceived = useCallback((payload: { message: string }) => {
+    // debugger
+    // onMessageReceived(payload.message.join(""))
+    onMessageReceived(payload.message)
+  }, [onMessageReceived])
 
   return (<div className={className}>
-      <AiChat adapter={langServeAdapter}
-              className={'flex justify-center items-end'}
-              personaOptions={personasOptions}
-              displayOptions={{ colorScheme: 'dark' }}
-              composerOptions={{
-                placeholder: 'How can I help you today?'
-              }}
+      <AiChat
+        api={api}
+        adapter={adapter}
+        events={{ messageReceived }}
+        className={'flex justify-center items-end'}
+        personaOptions={personasOptions}
+        displayOptions={{ colorScheme: 'dark' }}
+        composerOptions={{
+          placeholder: 'How can I help you today?'
+        }}
       />
     </div>
   );
