@@ -7,14 +7,17 @@
   "dependencies": {
     "@nlux/langchain-react": "^2.17.1",
     "@nlux/react": "^2.17.1",
+    "@xyflow/react": "^12.3.0",
+    "clsx": "^2.1.1",
     "http-proxy": "^1.18.1",
+    "mermaid": "^11.2.1",
     "next": "14.2.3",
     "react": "18.3.1",
     "react-dom": "18.3.1",
+    "tailwind-merge": "^2.5.2",
     "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@types/http-proxy": "^1.17.15",
     "@nx/devkit": "19.7.4",
     "@nx/eslint": "19.7.4",
     "@nx/eslint-plugin": "19.7.4",
@@ -28,6 +31,7 @@
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
     "@swc/helpers": "~0.5.11",
+    "@types/http-proxy": "^1.17.15",
     "@types/jest": "^29.5.12",
     "@types/node": "18.16.9",
     "@types/react": "18.3.1",

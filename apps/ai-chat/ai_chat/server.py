@@ -2,7 +2,7 @@ import os
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
 from fastapi.middleware.cors import CORSMiddleware
-from .chain import chain as pirate_speak_chain
+from .chain import chain as diagram_chain
 from langchain.schema.runnable import Runnable
 from langserve import add_routes
 
@@ -43,7 +43,7 @@ def add_route(path: str, chain: Runnable):
     )
 
 # Test only
-add_route("/pirate-speak", pirate_speak_chain)
+add_route("/diagram", diagram_chain)
 
 if __name__ == "__main__":
   import uvicorn
