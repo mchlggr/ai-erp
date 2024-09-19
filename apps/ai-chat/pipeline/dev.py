@@ -5,4 +5,4 @@ def _run(bash_script):
 
 def dev_server():
   # return _run("uvicorn apps.ai-chat.ai_chat.server:app --reload")
-  return _run("uvicorn ai_chat.server:app")
+  return _run("uvicorn ai_chat.server:app --reload")
