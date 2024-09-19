@@ -42,9 +42,15 @@ const simpleTD = `graph TD
 `
 
 const mcdonalds = `graph TD
-A[Enter McDonald's] --> B{Are you dining in or taking out?}
-B --> |Dining in| C[Choose a table]
-B --> |Taking out| D[Place order at counter]`
+A(Start) --> B(Identify potential leads)
+B --> C(Contact leads to qualify)
+C --> D(Schedule product demo)
+D --> E(Conduct product demo)
+E --> F(Follow up with pricing details)
+F --> G(Negotiate terms)
+G --> H(Close the sale)
+H --> I(Provide post-sale support)
+I --> J(End)`
 
 
 export default function Index() {
