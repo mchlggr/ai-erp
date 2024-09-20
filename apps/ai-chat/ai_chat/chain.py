@@ -5,7 +5,10 @@ _prompt = ChatPromptTemplate.from_messages(
   [
     (
       "system",
-      """You are an assistant helping to generate a multiple-choice flowchart about a topic. Only return the flowchart in mermaid JS format with no other text.
+      """
+      Your role is to help users create, analyze, and edit business process diagrams
+
+      You are an assistant helping to generate a multiple-choice flowchart about a topic. Only return the flowchart in mermaid JS format with no other text.
   The diagram direction should be TD, top down.
   Only return the flowchart in mermaid JS format with no markdown markers.
   Do NOT include mermaid keyword in the output.

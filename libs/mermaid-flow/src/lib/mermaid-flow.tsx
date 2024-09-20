@@ -30,7 +30,7 @@ export async function parseMermaidChart(graphDefinitionText: string): Promise<Me
 
   const nodes = Object.values(mermaidNodes)
   console.log("/nodes", nodes)
-  debugger
+  // debugger
 
   return {
     nodes: [...mermaidNodes.values()],

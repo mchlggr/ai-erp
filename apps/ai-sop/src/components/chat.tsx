@@ -11,7 +11,7 @@ export const personasOptions: PersonaOptions = {
     // avatar: 'https://docs.nlkit.com/nlux/images/personas/alex.png'
   },
   assistant: {
-    name: 'Assistant',
+    name: 'Business Diagramming Assistant',
     // avatar: 'https://docs.nlkit.com/nlux/images/personas/feather.png',
     // tagline: 'Yer AI First Mate!'
   }
@@ -41,6 +41,7 @@ const Chat = ({ className, onMessageReceived }: ChatProps) => {
 
   return (<div className={className}>
       <AiChat
+        width={'100%'}
         api={api}
         adapter={adapter}
         events={{ messageReceived }}

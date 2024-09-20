@@ -53,9 +53,30 @@ H --> I(Provide post-sale support)
 I --> J(End)`
 
 
+const sop = `graph TD
+A[Start] --> B(Receive order)
+B --> C{Stock available?}
+C -->|Yes| D[Allocate stock]
+C -->|No| E[Order from supplier]
+D --> F[Pack items]
+F --> G[Label items]
+G --> H[Quality check]
+H --> I[Prepare for shipping]
+I --> J[Dispatch order]
+J --> K[Update inventory]
+K --> L{More orders?}
+L -->|Yes| B
+L -->|No| M[End]
+E --> N{Items received?}
+N -->|Yes| D
+N -->|No| O[Follow up with supplier]
+O --> B
+`
+
+
 export default function Index() {
 
-  const [diagram,  setDiagram] = useState(mcdonalds)
+  const [diagram,  setDiagram] = useState(sop)
   const [isComplete, setIsComplete] = useState(true)
 
   const onMessageReceived = useCallback((message: string) => {

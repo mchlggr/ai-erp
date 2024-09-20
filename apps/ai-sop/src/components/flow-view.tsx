@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   useNodesState,
@@ -12,14 +12,21 @@ import {
   ReactFlowProvider,
   NodeChange,
   useReactFlow,
-  Position,
-} from "@xyflow/react";
+  Position, applyEdgeChanges, EdgeChange, Connection, addEdge
+} from '@xyflow/react';
 import RFCustomEdge from "./RFCustomEdge";
 import RFCustomNode from "./RFCustomNode";
 import dagre from "dagre";
 import { MermaidChartDirection } from '@ai-erp/mermaid-flow';
 
 // import { MermaidChartDirection } from "../../shared/models/mermaid.model";
+
+const introNode = {
+  id: 'intro',
+  // type: 'customNodeType',
+  position: { x: 100, y: -200 },
+  data: { label: 'Hello' },
+}
 
 const nodeTypes = {
     customNodeType: RFCustomNode,
@@ -67,11 +74,12 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
   const updateGraphLayout = (
     nodes: Node[],
     edges: Edge[],
-    direction: MermaidChartDirection
+    // direction: MermaidChartDirection
   ): { nodes: Node[]; edges: Edge[] } => {
+    const direction = MermaidChartDirection.TD
     const isHorizontal = direction === MermaidChartDirection.LR;
 
-    dagreGraph.setGraph({ rankdir: direction });
+    dagreGraph.setGraph({ rankdir: "TB" });
 
     nodes.forEach((node: Node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -119,6 +127,17 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
   console.log("flow-view/nodes", nodes)
   console.log("flow-view/edges", edges)
 
+
+  const onEdgesChange = useCallback(
+    (changes: EdgeChange[]) =>
+      setEdges((eds) => applyEdgeChanges(changes, eds)),
+    []
+  );
+  const onConnect = useCallback(
+    (params: Edge | Connection) => setEdges((eds) => addEdge(params, eds)),
+    []
+  );
+
   return (
     <>
       <svg
@@ -156,13 +175,15 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
       {/* Reactflow Board */}
       <ReactFlow
         // fitView
-        nodes={nodes.map((node) => {
+        nodes={[...nodes.map((node) => {
           //{id: 'B', labelType: 'text', domId: 'flowchart-B-13', styles: Array(0), classes: Array(0), …
           return {
             ...node,
             data: { label: node.text },
           }
-        })}
+        }),
+          // introNode
+        ]}
         edges={edges.map((edge) => {
           // start: 'A', end: 'B', type: 'arrow_point', text: '', labelType: 'text', …
           return {
@@ -182,6 +203,8 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
         connectionMode={ConnectionMode.Loose}
         onlyRenderVisibleElements={true}
         onNodesChange={onCustomNodesChangeHandler}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
       >
         {/*<MiniMap zoomable pannable className="minimap" />*/}
         <Background
