@@ -60,6 +60,13 @@
         "command": "poetry run pytest tests/",
         "cwd": "apps/ai-chat"
       }
+    },
+    "dev": {
+      "executor": "@nxlv/python:run-commands",
+      "options": {
+        "command": "poetry run dev",
+        "cwd": "apps/ai-chat"
+      }
     }
   },
   "tags": []

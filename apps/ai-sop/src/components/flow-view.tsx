@@ -74,12 +74,13 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
   const updateGraphLayout = (
     nodes: Node[],
     edges: Edge[],
-    // direction: MermaidChartDirection
+    direction: MermaidChartDirection = MermaidChartDirection.TD
   ): { nodes: Node[]; edges: Edge[] } => {
-    const direction = MermaidChartDirection.TD
+    // const direction = MermaidChartDirection.TD
     const isHorizontal = direction === MermaidChartDirection.LR;
 
-    dagreGraph.setGraph({ rankdir: "TB" });
+    // dagreGraph.setGraph({ rankdir: "TB" });
+    dagreGraph.setGraph({  });
 
     nodes.forEach((node: Node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -92,7 +93,7 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
     dagre.layout(dagreGraph);
 
     nodes.forEach((node: Node) => {
-      // debugger
+      debugger
       const nodeWithPosition = dagreGraph.node(node.id);
       node.targetPosition = isHorizontal ? Position.Left : Position.Top;
       node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;

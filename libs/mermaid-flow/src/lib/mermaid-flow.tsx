@@ -18,6 +18,16 @@ export async function parseMermaidChart(graphDefinitionText: string): Promise<Me
   );
   console.log("/diagram", diagram)
 
+  const parseResult = await mermaid.parse(graphDefinitionText);
+  const renderResult = await mermaid.render("graphDiv", graphDefinitionText);
+  console.log("/diagram/parseResult", parseResult)
+
+  // renderResult.bindFunctions
+
+  // debugger
+
+  console.log("/diagram", diagram.getParser())
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const parser = (diagram.getParser() as ParserDefinition as any).yy;
 
