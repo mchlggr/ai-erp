@@ -1,0 +1,9 @@
+{
+  "name": "flow-editor",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/flow-editor/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project flow-editor --web",
+  "targets": {}
+}

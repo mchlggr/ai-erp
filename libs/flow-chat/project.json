@@ -1,0 +1,9 @@
+{
+  "name": "flow-chat",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/flow-chat/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project flow-chat --web",
+  "targets": {}
+}

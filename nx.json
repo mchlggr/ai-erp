@@ -70,7 +70,8 @@
     "@nx/react": {
       "library": {
         "style": "tailwind",
-        "linter": "eslint"
+        "linter": "eslint",
+        "unitTestRunner": "vitest"
       },
       "application": {
         "babel": true,
