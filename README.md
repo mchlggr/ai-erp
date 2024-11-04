@@ -17,7 +17,7 @@ This project showcases basic integration between an AI model and flowchart tools
 	•	[ ] Convert process diagram into tiny step-by-step apps
 
 ## To run this project locally
-These are very high-level steps, not-complete YMMV (if you try to run it, let me know if you have any issues)
+These are very high-level steps, not-complete YMMV. The backend is relatively simple, the complexity is more on the frontend (if you try to run it, let me know if you have any issues)
 ```
 pnpm install --global nx
 pnpm install
