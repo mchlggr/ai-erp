@@ -1,6 +1,6 @@
 /* reactflow imports*/
-@import "@xyflow/react/dist/base.css";
-@import "@xyflow/react/dist/style.css";
+@import '@xyflow/react/dist/base.css';
+@import '@xyflow/react/dist/style.css';
 
 :root {
   --edge-stroke-color: #805ad5;

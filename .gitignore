@@ -44,4 +44,9 @@ Thumbs.db
 # Next.js
 .next
 out
+
+# Dev Archives
 archive/
+
+# Python Cache
+.cache/

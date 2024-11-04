@@ -1,3 +1,3 @@
-# ai-chat
+# flow-server
 
 Project description here.

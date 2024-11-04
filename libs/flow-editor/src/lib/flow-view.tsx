@@ -3,7 +3,6 @@ import {
   ReactFlow,
   useNodesState,
   useEdgesState,
-  MiniMap,
   Background,
   Edge,
   Node,
@@ -12,23 +11,30 @@ import {
   ReactFlowProvider,
   NodeChange,
   useReactFlow,
-  Position, applyEdgeChanges, EdgeChange, Connection, addEdge, ReactFlowProps
+  Position,
+  applyEdgeChanges,
+  EdgeChange,
+  Connection,
+  addEdge,
+  ReactFlowProps
 } from '@xyflow/react';
 import FlowEdge from './flow-edge';
 import FlowNode from './flow-node';
 import dagre from 'dagre';
-import { MermaidChartDirection, MermaidEdge, MermaidNode } from '@ai-erp/mermaid-flow';
-import { CustomNode } from './custom-node';
+import {
+  MermaidChartDirection
+} from '@ai-erp/mermaid-flow';
 import { backgroundColor, backgroundDotColor } from './themes';
 import type { OnConnectEnd } from '@xyflow/system';
 import { nanoid } from 'nanoid';
-import { makeEdge } from '@ai-erp/flow-editor';
+import { StartNode } from './start-node';
+import { EndNode } from './end-node';
+import { makeEdge } from './flow-editor';
 
 const nodeTypes = {
   flowEditorNode: FlowNode,
-  startEvent: CustomNode,
-  endEvent: CustomNode,
-  activity: CustomNode
+  startEvent: StartNode,
+  endEvent: EndNode
 };
 
 const edgeTypes = {
@@ -38,10 +44,6 @@ const edgeTypes = {
 // TODO: replace with dynamic calculation
 const nodeWidth = 250;
 const nodeHeight = 200;
-
-// let id = 1;
-// const getId = () => `${id++}`;
-// const nodeOrigin = [0.5, 0];
 
 export interface FlowViewProps extends PropsWithChildren, ReactFlowProps {
   initialNodes: Node[];
@@ -155,18 +157,18 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
             x: clientX,
             y: clientY
           }),
-          type: "flowEditorNode",
-          dragHandle: ".flow-editor-node-handle",
+          type: 'flowEditorNode',
+          dragHandle: '.flow-editor-node-handle',
           data: {
             // label: `Node ${id}`,
-            label: `New Node Double-Click to Edit`,
+            label: `New Node Double-Click to Edit`
           },
           origin: [0.5, 0.0]
         };
 
-        const source = connectionState?.fromNode?.id
-        if(!source) throw new Error("Missing Connection State Source Node")
-        const nextEdge = makeEdge({ id, source, target: id })
+        const source = connectionState?.fromNode?.id;
+        if (!source) throw new Error('Missing Connection State Source Node');
+        const nextEdge = makeEdge({ id, source, target: id });
 
         setNodes((nds) => nds.concat(nextNode));
         setEdges((eds) => eds.concat(nextEdge));
@@ -219,7 +221,8 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
  * @return {JSX.Element} the wrapped ErdBuilder component
  */
 const FlowViewWithProvider = (props: FlowViewProps): React.ReactNode => {
-  return (<>
+  return (
+    <>
       <ReactFlowProvider>
         <FlowView {...props} />
       </ReactFlowProvider>

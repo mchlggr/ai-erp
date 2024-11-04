@@ -1,14 +1,14 @@
 {
-  "name": "ai-chat",
+  "name": "flow-server",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/ai-chat/ai_chat",
+  "sourceRoot": "apps/flow-server/flow_server",
   "targets": {
     "lock": {
       "executor": "@nxlv/python:run-commands",
       "options": {
         "command": "poetry lock --no-update",
-        "cwd": "apps/ai-chat"
+        "cwd": "apps/flow-server"
       }
     },
     "add": {
@@ -27,7 +27,7 @@
       "executor": "@nxlv/python:build",
       "outputs": ["{projectRoot}/dist"],
       "options": {
-        "outputPath": "apps/ai-chat/dist",
+        "outputPath": "apps/flow-server/dist",
         "publish": false,
         "lockedVersions": true,
         "bundleLocalDependencies": true
@@ -45,27 +45,27 @@
     },
     "lint": {
       "executor": "@nxlv/python:flake8",
-      "outputs": ["{workspaceRoot}/reports/apps/ai-chat/pylint.txt"],
+      "outputs": ["{workspaceRoot}/reports/apps/flow-server/pylint.txt"],
       "options": {
-        "outputFile": "reports/apps/ai-chat/pylint.txt"
+        "outputFile": "reports/apps/flow-server/pylint.txt"
       }
     },
     "test": {
       "executor": "@nxlv/python:run-commands",
       "outputs": [
-        "{workspaceRoot}/reports/apps/ai-chat/unittests",
-        "{workspaceRoot}/coverage/apps/ai-chat"
+        "{workspaceRoot}/reports/apps/flow-server/unittests",
+        "{workspaceRoot}/coverage/apps/flow-server"
       ],
       "options": {
         "command": "poetry run pytest tests/",
-        "cwd": "apps/ai-chat"
+        "cwd": "apps/flow-server"
       }
     },
     "dev": {
       "executor": "@nxlv/python:run-commands",
       "options": {
         "command": "poetry run dev",
-        "cwd": "apps/ai-chat"
+        "cwd": "apps/flow-server"
       }
     }
   },

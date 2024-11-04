@@ -3,21 +3,22 @@ import React from 'react';
 
 export function EndNode() {
   return (
-    <div className='w-12 h-12 bg-white border-2 border-black rounded-full relative'>
-      <div className='w-7 h-7 bg-black rounded-full relative m-2'></div>
+    <div className="w-12 h-12 bg-white border-2 border-black rounded-full relative">
+      <div className="w-7 h-7 bg-black rounded-full relative m-2"></div>
       <Handle
-        type='target'
+        type="target"
         position={Position.Top}
-        id='a'
+        id="a"
         style={{ background: '#555' }}
       />
       <Handle
-        type='source'
+        type="source"
         position={Position.Bottom}
-        id='b'
+        id="b"
         style={{ background: '#555' }}
       />
-    </div>);
+    </div>
+  );
 }
 
 export default EndNode;

@@ -3,11 +3,10 @@ import {
   EdgeProps,
   getBezierPath,
   EdgeLabelRenderer,
-  BaseEdge
+  BaseEdge,
 } from '@xyflow/react';
 import { cn } from '@ai-erp/shared-utils';
 import { edgeStrokeColor } from './themes';
-
 
 const FlowEdge: FC<EdgeProps> = (props) => {
   const {
@@ -20,9 +19,9 @@ const FlowEdge: FC<EdgeProps> = (props) => {
     sourcePosition,
     targetPosition,
     data,
-    label="",
+    label = '',
     markerEnd,
-    markerStart
+    markerStart,
   } = props;
 
   const [edgePath, labelX, labelY] = getBezierPath({
@@ -31,7 +30,7 @@ const FlowEdge: FC<EdgeProps> = (props) => {
     sourcePosition,
     targetX,
     targetY,
-    targetPosition
+    targetPosition,
   });
 
   const contentEditableLabelRef: MutableRefObject<HTMLDivElement | undefined> =
@@ -66,12 +65,15 @@ const FlowEdge: FC<EdgeProps> = (props) => {
           onClick={onLabelClick}
           style={{
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            display: label && label !== "" ? 'block' : 'none',
-            backgroundColor: edgeStrokeColor
+            display: label && label !== '' ? 'block' : 'none',
+            backgroundColor: edgeStrokeColor,
           }}
           onBlur={onLabelBlur}
           suppressContentEditableWarning={true}
-          className={cn('custom-edge-label', 'nodrag', 'nopan',
+          className={cn(
+            'custom-edge-label',
+            'nodrag',
+            'nopan',
             `absolute text-white rounded text-xs font-medium p-2.5 pointer-events-auto;`
           )}
         >
