@@ -1,6 +1,8 @@
 # AI Flowchart Assistant
 A simple project experimenting with how to build an AI-powered flowchart diagramming assistant.
 
+![Screenshot of the Flowchart Assistant](./docs/screenshot.png)
+
 ## Overview
 This project showcases basic integration between an AI model and flowchart tools, allowing a focused space to experiment with prompting for diagram generation, then modification.
 

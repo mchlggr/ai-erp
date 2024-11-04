@@ -6,7 +6,7 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
   SidebarInset,
-  SidebarProvider,
+  SidebarProvider
 } from '@ai-erp/shared-ui';
 import AppSidebar from '../components/app-sidebar';
 import AppHeader from '../components/app-header';
@@ -43,28 +43,26 @@ export function App() {
   }, []);
 
   return (
-    <SidebarProvider defaultOpen={false} >
-      {/*<ChatContextProvider>*/}
-        <AppSidebar />
-        <SidebarInset>
-          <AppHeader />
-          <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-            <ResizablePanelGroup
-              direction={orientation}
-              className={'min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min overflow-hidden border-2 box-shadow-md'}
-            >
-              <ResizablePanel>
-                <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
-              </ResizablePanel>
-              <ResizableHandle withHandle />
-              <ResizablePanel minSize={33}>
-                <FlowChat onMessageReceived={onMessageReceived} />
-              </ResizablePanel>
-            </ResizablePanelGroup>
-          </div>
-        </SidebarInset>
-      {/*</ChatContextProvider>*/}
-      </SidebarProvider>
+    <SidebarProvider defaultOpen={false}>
+      <AppSidebar />
+      <SidebarInset>
+        <AppHeader />
+        <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
+          <ResizablePanelGroup
+            direction={orientation}
+            className={'min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min overflow-hidden border-2 box-shadow-md'}
+          >
+            <ResizablePanel>
+              <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
+            </ResizablePanel>
+            <ResizableHandle withHandle />
+            <ResizablePanel minSize={33}>
+              <FlowChat onMessageReceived={onMessageReceived} />
+            </ResizablePanel>
+          </ResizablePanelGroup>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
   );
 }
 
