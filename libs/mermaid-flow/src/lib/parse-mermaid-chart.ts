@@ -7,32 +7,32 @@ type MermaidParserResponse = {
   direction: MermaidChartDirection;
 }
 
-// window.mermaidInit = false;
 mermaid.initialize({ startOnLoad: false });
+
 const emptyChartResponse: MermaidParserResponse = Object.freeze({ nodes: [], edges: [], direction: MermaidChartDirection.TD });
 
 export async function parseMermaidChart(graphDefinitionText: string): Promise<MermaidParserResponse> {
-  const d = await mermaid.parse(graphDefinitionText);
-  const a= d.config
 
   const diagram = await mermaid.mermaidAPI.getDiagramFromText(
     graphDefinitionText
   );
-
-  const parseResult = await mermaid.parse(graphDefinitionText);
-  const renderResult = await mermaid.render("graphDiv", graphDefinitionText);
 
   const parser = diagram.getParser().parser?.yy
 
   if(!parser) return emptyChartResponse
 
 
+  // @ts-expect-error mermaid.js types are incorrect
   const mermaidEdges = (parser.getEdges() as MermaidEdge[]) || [];
+
+    // @ts-expect-error mermaid.js types are incorrect
   const mermaidNodes = (parser.getVertices() as MermaidNode[]) || [];
 
   const nodes = Object.values(mermaidNodes)
 
   let mermaidDirection = MermaidChartDirection.TD
+
+  // @ts-expect-error mermaid.js types are incorrect
   if(parser.getDirection() === "LR") mermaidDirection = MermaidChartDirection.LR
 
   return {

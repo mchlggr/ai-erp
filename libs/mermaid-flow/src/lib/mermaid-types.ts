@@ -23,9 +23,3 @@ export enum MermaidChartDirection {
   TD = "TD",
   LR = "LR",
 }
-
-// export interface MermaidParserEvent {
-//   nodes: MermaidNode[];
-//   edges: MermaidEdge[];
-//   direction: MermaidChartDirection;
-// }
