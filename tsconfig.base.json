@@ -20,6 +20,7 @@
       "@ai-erp/flow-editor/styles": ["libs/flow-editor/src/styles.css"],
       "@ai-erp/mermaid-flow": ["libs/mermaid-flow/src/index.ts"],
       "@ai-erp/mermaid-flow/server": ["libs/mermaid-flow/src/server.ts"],
+      "@ai-erp/shared-ui": ["libs/shared-ui/src/index.ts"],
       "@ai-erp/shared-utils": ["libs/shared-utils/src/index.ts"]
     }
   },
