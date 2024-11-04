@@ -23,10 +23,10 @@ export function AppSidebar() {
     <>
       <Sidebar side="left" collapsible="offcanvas" variant="sidebar">
         <SidebarHeader className="flex flex-row h-16 shrink-0 items-center gap-4 px-4">
-          <h1 className="text-md font-bold text-foreground">Flowcharts</h1>
+          <h1 className="text-md font-bold text-foreground">My Flowcharts</h1>
         </SidebarHeader>
         <SidebarContent className={'px-4'}>
-          Login to save and revisit previous chart chats!
+          User accounts and chart history saving are currently under development
           {/*  <SidebarGroup>*/}
           {/*    <SidebarGroupLabel asChild>Projects</SidebarGroupLabel>*/}
           {/*    <SidebarGroupAction title="Add Project">*/}

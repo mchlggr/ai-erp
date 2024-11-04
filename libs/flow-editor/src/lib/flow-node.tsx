@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 import Markdown from 'react-markdown';
 import { MermaidChartDirection } from '@ai-erp/mermaid-flow';
 import { cn } from '@ai-erp/shared-utils';
-import { nodeBackgroundColor, nodeColor, tooltipBackgroundColor, tooltipTextColor } from './themes';
+import { nodeBackgroundColor, nodeTextColor, tooltipBackgroundColor, tooltipTextColor } from './themes';
 
 export interface IRFCustomNodeProps {
   id: string;
@@ -38,7 +38,7 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
       'border-[#e9d8fd]',
       'bg-[#e9d8fd]'
     )} onDoubleClick={onLabelDoubleClick}
-         style={{ boxShadow: '4px 4px 0px 0px rgba(69, 53, 122, 0.8)' }}
+         style={{ boxShadow: '4px 4px 0px 0px rgba(69, 53, 122, 0.5)' }}
     >
       <Handle
         id={id}
@@ -66,7 +66,7 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
         className={
           cn('flow-editor-node-label-handle',
             `bg-[${nodeBackgroundColor}] cursor-pointer px-2.5 py-0.75 rounded-full transition-all duration-300 ease-in-out`,
-            `text-[${nodeColor}]`,
+            `text-[${nodeTextColor}]`,
             'text-[#44347a]',
             'font-bold'
           )}

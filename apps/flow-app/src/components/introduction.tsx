@@ -4,12 +4,16 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 export function Introduction() {
 
   const features = [
-    [false, 'Basic natural language parsing for flowchart commands'],
-    [false, 'Simple node and connection creation'],
+    [true, 'Basic natural language parsing for generating flowchart'],
+    [true, 'Simple node and connection creation'],
     [true, 'Minimal SVG-based diagram rendering'],
     [true, 'Demo implementation using mermaid.js or similar library'],
-    [false, 'Example prompts and responses'],
-    [false, 'Login to save and revisit previous chart chats']
+    [true, 'Example prompts and responses'],
+    [false, 'Login to save and revisit previous chart chats'],
+    [false, 'Natural language commands to manipulate diagram details'],
+    [false, 'Select nodes and prompt diagram changes'],
+    [false, 'Voice input to generate and manipulate diagrams'],
+    [false, 'Convert process diagram into guided application'],
   ];
 
   return (
@@ -28,8 +32,8 @@ export function Introduction() {
               Overview
             </h2>
             <p>
-              This project showcases basic integration between an AI model and flowchart creation tools, allowing
-              developers to experiment with natural language processing for diagram generation.
+              This project showcases basic integration between an AI model and flowchart tools, allowing
+              a focused space to experiment with prompting for diagram generation.
             </p>
             <h2 className="text-lg font-bold">Features</h2>
             <ul className={'gap-y-2'}>

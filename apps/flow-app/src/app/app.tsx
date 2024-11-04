@@ -60,7 +60,7 @@ export function App() {
                 <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
               </ResizablePanel>
               <ResizableHandle withHandle />
-              <ResizablePanel>
+              <ResizablePanel minSize={33} >
                 <FlowChat
                   onMessageReceived={onMessageReceived}
                   // className={'absolute bottom-0 left-0 right-0'}

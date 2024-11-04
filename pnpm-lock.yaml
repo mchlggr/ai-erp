@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@nlux/highlighter':
+    specifier: ^2.17.1
+    version: 2.17.1
   '@nlux/langchain-react':
     specifier: ^2.17.1
     version: 2.17.1(@nlux/react@2.17.1)(react@18.3.1)
@@ -2830,6 +2833,13 @@ packages:
 
   /@nlux/core@2.17.1:
     resolution: {integrity: sha512-hIvOnuENVqWaIg5Co4JtFmHph7Sp0Nj+QixOMdOW9Ou7CjU7HK+maB5koLoayNL64B+wHTtgPN7zBrB8NCSPXw==}
+    dev: false
+
+  /@nlux/highlighter@2.17.1:
+    resolution: {integrity: sha512-/ETnJPbNJWY8ZQH6XAQ5zooEMPsy44Lk2tIxMfr5Ca7+0ICpkMP0mppOmAoKCQBNVsqmKe0oczFBk8blddNDaA==}
+    dependencies:
+      '@nlux/core': 2.17.1
+      highlight.js: 11.10.0
     dev: false
 
   /@nlux/langchain-react@2.17.1(@nlux/react@2.17.1)(react@18.3.1):
@@ -8934,6 +8944,11 @@ packages:
     resolution: {integrity: sha512-F/1DnUGPopORZi0ni+CvrCgHQ5FyEAHRLSApuYWMmrbSwoN2Mn/7k+Gl38gJnR7yyDZk6WLXwiGod1JOWNDKGw==}
     hasBin: true
     dev: true
+
+  /highlight.js@11.10.0:
+    resolution: {integrity: sha512-SYVnVFswQER+zu1laSya563s+F8VDGt7o35d4utbamowvUNLLMovFqwCLSocpZTz3MgaSRA1IbqRWZv97dtErQ==}
+    engines: {node: '>=12.0.0'}
+    dev: false
 
   /homedir-polyfill@1.0.3:
     resolution: {integrity: sha512-eSmmWE5bZTK2Nou4g0AI3zZ9rswp7GRKoKXS1BLUkvPviOqs4YTN1djQIqrXy9k5gEtdLPy86JjRwsNM9tnDcA==}

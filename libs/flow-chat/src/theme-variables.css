@@ -1,21 +1,24 @@
-.nlux-theme-MyBrandName[data-color-scheme='light'] {
-    --nlux-ChatRoom--BackgroundColor: #f9f9f9;
+
+
+
+.nlux-theme-FlowChat[data-color-scheme='light'] {
+    /*--nlux-ChatRoom--BackgroundColor: #ebf8ff;*/
 }
 
-.nlux-theme-MyBrandName[data-color-scheme='dark'] {
-    --nlux-ChatRoom--BackgroundColor: #060524;
-}
+/*.nlux-theme-FlowChat[data-color-scheme='dark'] {*/
+/*    --nlux-ChatRoom--BackgroundColor: #060524;*/
+/*}*/
 
-.nlux-theme-MyBrandName {
-
+.nlux-theme-FlowChat {
     /* Override top-level chat room colors */
-    --nlux-ChatRoom--BorderColor: #24233d;
-    --nlux-ChatRoom-Divider--Color: #24233d;
-    --nlux-ChatRoom--TextColor: #ffffff;
+    --nlux-ChatRoom--BorderColor: #e9d8fd;
+    --nlux-ChatRoom-Divider--Color: #e9d8fd;
+    --nlux-ChatRoom--TextColor: #44347a;
 
     /* Override message bubble colors */
-    --nlux-AiMessage--BackgroundColor: #00bfff;
-    --nlux-HumanMessage--BackgroundColor: #dc143c;
+    --nlux-AiMessage--BackgroundColor: #e9d8fd;
+    --nlux-HumanMessage--BackgroundColor: #805ad5;
+    --nlux-HumanMessage--TextColor: #fff;
 
     /* Override border width */
     --nlux-ChatRoom--BorderWidth: 0;
@@ -26,35 +29,55 @@
     --nlux-ConversationStarter--BorderWidth: 0;
 
     /* Override border radius */
-    --nlux-ChatRoom--BorderRadius: 5px;
-    --nlux-PromptInput--BorderRadius: 5px 0 0 5px;
-    --nlux-SubmitButton--BorderRadius: 0 5px 5px 0;
-    --nlux-ChatItem-Avatar--BorderRadius: 5px;
-    --nlux-ChatItem-Message-BubbleLayout--BorderRadius: 5px;
-    --nlux-ConversationStarter--BorderRadius: 5px;
+    --nlux-ChatRoom--BorderRadius: 0px;
+    /*--nlux-PromptInput--BorderRadius: 8px 0 0 8px;*/
+    --nlux-PromptInput--BorderRadius: 0px;
+    /*--nlux-SubmitButton--BorderRadius: 0 8px 8px 0;*/
+    --nlux-SubmitButton--BorderRadius: 0px;
+    --nlux-ChatItem-Message-BubbleLayout--BorderRadius: 8px;
+    --nlux-ConversationStarter--BorderRadius: 8px;
 
     /* Override input colors */
-    --nlux-PromptInput--BackgroundColor: #24233d;
-    --nlux-PromptInput-Active--BackgroundColor: #24233d;
-    --nlux-PromptInput-Disabled--BackgroundColor: #24233d;
+   --nlux-composer-container--BackgroundColor: none;
+    /*--nlux-PromptInput--Border: 4px solid #805ad5;*/
+    /*--nlux-PromptInput--BorderRadius: 5px;*/
+    /*--nlux-PromptInput--BorderWidth: 4px;*/
+    /*--nlux-PromptInput--BorderColor: #805ad5;*/
+
+    /*--nlux-PromptInput--BackgroundColor: #fff;*/
+    /*--nlux-PromptInput-Active--BackgroundColor: #fff;*/
+    /*--nlux-PromptInput-Disabled--BackgroundColor: #fff;*/
 
     /* Gap between submit button and input */
     --nlux-Composer--Gap: 0;
 
     /* Override submit button colors */
-    --nlux-SubmitButton--BackgroundColor: #24233d;
-    --nlux-SubmitButton-Active--BackgroundColor: #24233d;
-    --nlux-SubmitButton-Disabled--BackgroundColor: #24233d;
+    /*--nlux-SubmitButton--BackgroundColor: orange;*/
+    /*--nlux-SubmitButton-Active--BackgroundColor: yellow;*/
+    /*--nlux-SubmitButton-Disabled--BackgroundColor: pink;*/
 
     /* Conversation starter colors */
-    --nlux-ConversationStarter--BackgroundColor: #24233d;
+    --nlux-ConversationStarter--BackgroundColor: #e9d8fd;
+    --nlux-ConversationStarter--TextColor: #44347a;
 
-    /* Override icon for the send button */
-    --nlux-send-icon: url('data:image/svg+xml,\
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" \
-        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">\
-      <circle cx="12" cy="12" r="10"/>\
-      <path d="M16 12l-4-4-4 4M12 16V9"/>\
-    </svg>\
-  ');
+      --nlux-send-icon: url('data:image/svg+xml,\
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>\
+    ');
+
+    /*--nlux-send-icon: url('data:image/svg+xml,\*/
+    /*  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-refresh-cw"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>\*/
+    /*')*/
+
+  /*.nlux-composer-container {*/
+  .nlux-comp-composer {
+    background: #fff;
+    border-radius: 8px;
+    border: 1px solid hsl(220 13% 91%);
+    overflow: hidden;
+    /*border-top-width: 4px;*/
+    padding-top: 16px;
+    padding-left: 16px;
+    padding-right: 8px;
+    padding-bottom: 16px;
+  }
 }
