@@ -66,12 +66,13 @@ const FlowEdge: FC<EdgeProps> = (props) => {
           onClick={onLabelClick}
           style={{
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            display: label && label !== "" ? 'block' : 'none'
+            display: label && label !== "" ? 'block' : 'none',
+            backgroundColor: edgeStrokeColor
           }}
           onBlur={onLabelBlur}
           suppressContentEditableWarning={true}
           className={cn('custom-edge-label', 'nodrag', 'nopan',
-            `absolute bg-[${edgeStrokeColor}] text-white rounded text-xs font-medium p-2.5 pointer-events-auto;`
+            `absolute text-white rounded text-xs font-medium p-2.5 pointer-events-auto;`
           )}
         >
           {label}

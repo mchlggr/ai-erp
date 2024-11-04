@@ -22,7 +22,6 @@ const adapterOptions: ChatAdapterOptions<string> = {
   url: 'http://127.0.0.1:8000/diagram'
 };
 
-
 interface ChatProps {
   className?: string;
   onMessageReceived: (message: string) => void;

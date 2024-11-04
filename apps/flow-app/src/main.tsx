@@ -3,6 +3,7 @@ import * as ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 
 import '@ai-erp/flow-editor/styles';
+import '@ai-erp/shared-ui/styles';
 
 import App from './app/app';
 
