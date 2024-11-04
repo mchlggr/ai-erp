@@ -1,10 +1,10 @@
 import mermaid from 'mermaid';
 import { ParserDefinition } from 'mermaid/dist/diagram-api/types.js';
-import { IMermaidEdgeDefinition, IMermaidNodeDefinition } from './mermaid-types';
+import { MermaidEdge, MermaidNode } from './mermaid-types';
 
 type MermaidParserResponse = {
-  nodes: IMermaidNodeDefinition[];
-  edges: IMermaidEdgeDefinition[];
+  nodes: MermaidNode[];
+  edges: MermaidEdge[];
   direction: string;
 }
 
@@ -28,8 +28,8 @@ export async function parseMermaidChart(graphDefinitionText: string): Promise<Me
   if(!parser) return emptyChartResponse
 
 
-  const mermaidEdges = (parser.getEdges() as IMermaidEdgeDefinition[]) || [];
-  const mermaidNodes = (parser.getVertices() as IMermaidNodeDefinition[]) || [];
+  const mermaidEdges = (parser.getEdges() as MermaidEdge[]) || [];
+  const mermaidNodes = (parser.getVertices() as MermaidNode[]) || [];
 
   const nodes = Object.values(mermaidNodes)
 

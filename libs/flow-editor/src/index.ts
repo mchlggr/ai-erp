@@ -1,2 +1,2 @@
 export * from './lib/flow-editor';
-export * from './lib/diagram';
+// export * from './lib/diagram';

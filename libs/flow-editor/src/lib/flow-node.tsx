@@ -14,7 +14,7 @@ export interface IRFCustomNodeProps {
   isConnectable: boolean;
 }
 
-const RFCustomNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
+const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
   const contentEditableLabelRef: MutableRefObject<HTMLDivElement | undefined> =
     useRef<HTMLDivElement>();
 
@@ -77,4 +77,4 @@ const RFCustomNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
   );
 });
 
-export default RFCustomNode;
+export default FlowNode;

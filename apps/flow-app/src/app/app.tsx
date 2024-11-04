@@ -1,5 +1,5 @@
 import { Route, Routes, Link } from 'react-router-dom';
-import { Diagram } from '@ai-erp/flow-editor';
+import { FlowEditor } from '@ai-erp/flow-editor';
 import { FlowChat } from '@ai-erp/flow-chat';
 import { useCallback, useState } from 'react';
 
@@ -34,7 +34,7 @@ export function App() {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <Diagram isComplete={isComplete} mermaidCode={diagram} />
+      <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
       <FlowChat
         onMessageReceived={onMessageReceived}
         className={'absolute bottom-0 left-0 right-0'}

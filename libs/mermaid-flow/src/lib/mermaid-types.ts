@@ -1,4 +1,4 @@
-export interface IMermaidEdgeDefinition {
+export interface MermaidEdge {
   start: string;
   end: string;
   type: string;
@@ -8,7 +8,7 @@ export interface IMermaidEdgeDefinition {
   length: number;
 }
 
-export interface IMermaidNodeDefinition {
+export interface MermaidNode {
   id: string;
   labelType: string;
   domId: string;
@@ -24,8 +24,8 @@ export enum MermaidChartDirection {
   LR = "LR",
 }
 
-export interface MermaidParserEvent {
-  nodes: IMermaidNodeDefinition[];
-  edges: IMermaidEdgeDefinition[];
-  direction: MermaidChartDirection;
-}
+// export interface MermaidParserEvent {
+//   nodes: MermaidNode[];
+//   edges: MermaidEdge[];
+//   direction: MermaidChartDirection;
+// }

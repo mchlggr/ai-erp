@@ -6,7 +6,7 @@ import {
   BaseEdge,
 } from "@xyflow/react";
 
-const RFCustomEdge: FC<EdgeProps> = ({
+const FlowEdge: FC<EdgeProps> = ({
   id,
   style,
   sourceX,
@@ -55,7 +55,6 @@ const RFCustomEdge: FC<EdgeProps> = ({
         markerEnd={!data.erdReadyToConnect ? markerEnd : ""}
         markerStart={!data.erdReadyToConnect ? markerStart : ""}
       />
-
       <EdgeLabelRenderer>
         <div
           contentEditable="true"
@@ -75,4 +74,4 @@ const RFCustomEdge: FC<EdgeProps> = ({
   );
 };
 
-export default RFCustomEdge;
+export default FlowEdge;

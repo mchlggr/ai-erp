@@ -14,52 +14,96 @@ import {
   useReactFlow,
   Position, applyEdgeChanges, EdgeChange, Connection, addEdge
 } from '@xyflow/react';
-import RFCustomEdge from "./RFCustomEdge";
-import RFCustomNode from "./RFCustomNode";
-import dagre from "dagre";
-import { MermaidChartDirection } from '@ai-erp/mermaid-flow';
+import FlowEdge from './FlowEdge';
+import FlowNode from './flow-node';
+import dagre from 'dagre';
+import { MermaidChartDirection, MermaidEdge, MermaidNode } from '@ai-erp/mermaid-flow';
 
 // import { MermaidChartDirection } from "../../shared/models/mermaid.model";
 
-const introNode = {
-  id: 'intro',
-  // type: 'customNodeType',
-  position: { x: 100, y: -200 },
-  data: { label: 'Hello' },
-}
+// const introNode = {
+//   id: 'intro',
+//   // type: 'customNodeType',
+//   position: { x: 100, y: -200 },
+//   data: { label: 'Hello' },
+// }
 
 const nodeTypes = {
-    customNodeType: RFCustomNode,
-  },
-  edgeTypes = {
-    customEdgeType: RFCustomEdge,
-  };
+  customNodeType: FlowNode
+};
+
+const edgeTypes = {
+  customEdgeType: FlowEdge
+};
 
 // TODO: replace with dynamic calculation
 const nodeWidth = 250;
 const nodeHeight = 200;
 
 export interface FlowViewProps extends PropsWithChildren {
-  nodes: Node[];
-  edges: Edge[];
+  initialNodes: MermaidNode[];
+  initialEdges: MermaidEdge[];
   direction: MermaidChartDirection;
 }
 
+const n: Node = {
+  data: {
+    label: ''
+  },
+  id: '',
+  position: {
+    x: 0,
+    y: 0
+  },
+  type: ''
+};
+
+const transformMermaidNodes = (nodes: MermaidNode[]): Node[] => {
+  return [...nodes.map((node) => {
+    return {
+      id: node.id,
+      data: { label: node.text },
+      type: 'default',
+      // We are using daigre to auto layout the nodes, this is just a placeholder
+      position: { x: 0, y: 0 }
+    };
+  })
+    // introNode
+  ];
+};
+const transformMermaidEdges = (edges: MermaidEdge[]): Edge[] => {
+  return [...edges.map((edge) => {
+    // start: 'A', end: 'B', type: 'arrow_point', text: '', labelType: 'text', …
+    // debugger
+    return {
+      ...edge,
+      id: `${edge.start}-${edge.end}`,
+      source: edge.start,
+      target: edge.end,
+      type: 'default'
+    };
+  })];
+};
 const FlowView = (props: FlowViewProps): React.ReactNode => {
+  const { initialNodes, initialEdges } = props;
+
   // react flow hooks
   const reactFlowInstance = useReactFlow();
 
   // shared states
-  const [nodes, setNodes, onNodesChange] = useNodesState(props.nodes);
-  const [edges, setEdges] = useEdgesState(props.edges);
+  const [nodes, setNodes, onNodesChange] = useNodesState(transformMermaidNodes(initialNodes));
+  const [edges, setEdges] = useEdgesState(transformMermaidEdges(initialEdges));
 
   useEffect(() => {
-    setNodes(props.nodes);
-    setEdges(props.edges);
+    const tranformedNodes = transformMermaidNodes(initialNodes);
+    const tranformedEdges = transformMermaidEdges(initialEdges);
 
-    updateGraphLayout(props.nodes, props.edges, props.direction);
+    setNodes(tranformedNodes);
+    setEdges(tranformedEdges);
+
+    updateGraphLayout(tranformedNodes, tranformedEdges, props.direction);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.nodes, props.edges, props.direction]);
+  }, [props.initialNodes, props.initialEdges, props.direction]);
 
   const dagreGraph = new dagre.graphlib.Graph();
   dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -78,7 +122,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
     const isHorizontal = direction === MermaidChartDirection.LR;
 
     // dagreGraph.setGraph({ rankdir: "TB" });
-    dagreGraph.setGraph({  });
+    dagreGraph.setGraph({});
 
     nodes.forEach((node: Node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -91,7 +135,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
     dagre.layout(dagreGraph);
 
     nodes.forEach((node: Node) => {
-      debugger
+      // debugger
       const nodeWithPosition = dagreGraph.node(node.id);
       node.targetPosition = isHorizontal ? Position.Left : Position.Top;
       node.sourcePosition = isHorizontal ? Position.Right : Position.Bottom;
@@ -100,7 +144,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
       // so it matches the React Flow node anchor point (top left).
       node.position = {
         x: nodeWithPosition.x - nodeWidth / 2,
-        y: nodeWithPosition.y - nodeHeight / 2,
+        y: nodeWithPosition.y - nodeHeight / 2
       };
 
       return node;
@@ -110,7 +154,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
       reactFlowInstance.fitView({
         duration: 1000,
         padding: 0.5,
-        nodes: nodes,
+        nodes: nodes
       });
     }, 500);
 
@@ -123,8 +167,8 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
 
   // console.log("flow-view/nodeTypes", nodeTypes)
   // console.log("flow-view/edgeTypes", edgeTypes)
-  console.log("flow-view/nodes", nodes)
-  console.log("flow-view/edges", edges)
+  console.log('flow-view/nodes', nodes);
+  console.log('flow-view/edges', edges);
 
 
   const onEdgesChange = useCallback(
@@ -174,26 +218,8 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
       {/* Reactflow Board */}
       <ReactFlow
         // fitView
-        nodes={[...nodes.map((node) => {
-          //{id: 'B', labelType: 'text', domId: 'flowchart-B-13', styles: Array(0), classes: Array(0), …
-          return {
-            ...node,
-            data: { label: node.text },
-            type: "default",
-          }
-        }),
-          // introNode
-        ]}
-        edges={edges.map((edge) => {
-          // start: 'A', end: 'B', type: 'arrow_point', text: '', labelType: 'text', …
-          return {
-            ...edge,
-            id: `${edge.start}-${edge.end}`,
-            source: edge.start,
-            target: edge.end,
-            type: "default",
-          }
-        })}
+        nodes={nodes}
+        edges={edges}
         nodeTypes={nodeTypes}
         edgeTypes={edgeTypes}
         snapToGrid={true}
@@ -226,9 +252,9 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
  */
 const FlowViewWithProvider = (props: FlowViewProps): React.ReactNode => {
   return (<>
-    <ReactFlowProvider>
-      <FlowView {...props} />
-    </ReactFlowProvider>
+      <ReactFlowProvider>
+        <FlowView {...props} />
+      </ReactFlowProvider>
     </>
   );
 };

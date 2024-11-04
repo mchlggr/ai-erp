@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react';
 import { FlowChat } from '@ai-erp/flow-chat';
-import { FlowEditor, Diagram } from '@ai-erp/flow-editor';
+import { FlowEditor, FlowEditor } from '@ai-erp/flow-editor';
 // import { Chat } from '../components/chat';
 // import Diagram from '../components/diagram';
 
@@ -88,7 +88,7 @@ export default function Index() {
 
   return (
     <div style={{ width: '100vw', height: '100vh' }}>
-      <Diagram isComplete={isComplete} mermaidCode={diagram} />
+      <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
       <FlowChat
         onMessageReceived={onMessageReceived}
         className={'absolute bottom-0 left-0 right-0'}
