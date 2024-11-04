@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { PropsWithChildren, useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   useNodesState,
@@ -39,25 +39,23 @@ const nodeTypes = {
 const nodeWidth = 250;
 const nodeHeight = 200;
 
-export interface FlowViewProps {
+export interface FlowViewProps extends PropsWithChildren {
   nodes: Node[];
   edges: Edge[];
   direction: MermaidChartDirection;
 }
 
-const FlowView = (props: FlowViewProps): JSX.Element => {
+const FlowView = (props: FlowViewProps): React.ReactNode => {
   // react flow hooks
   const reactFlowInstance = useReactFlow();
 
   // shared states
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
-  const [edges, setEdges] = useEdgesState([]);
-  console.log("does this have text?/nodesprops", props.nodes)
-  console.log("does this have text?/nodes", nodes)
+  const [nodes, setNodes, onNodesChange] = useNodesState(props.nodes);
+  const [edges, setEdges] = useEdgesState(props.edges);
 
   useEffect(() => {
-    setNodes(props.nodes || []);
-    setEdges(props.edges || []);
+    setNodes(props.nodes);
+    setEdges(props.edges);
 
     updateGraphLayout(props.nodes, props.edges, props.direction);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -181,6 +179,7 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
           return {
             ...node,
             data: { label: node.text },
+            type: "default",
           }
         }),
           // introNode
@@ -192,6 +191,7 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
             id: `${edge.start}-${edge.end}`,
             source: edge.start,
             target: edge.end,
+            type: "default",
           }
         })}
         nodeTypes={nodeTypes}
@@ -224,7 +224,7 @@ const FlowView = (props: FlowViewProps): JSX.Element => {
  * @param {FlowViewProps} props - the props to be passed down to the ErdBuilder component
  * @return {JSX.Element} the wrapped ErdBuilder component
  */
-const FlowViewWithProvider = (props: FlowViewProps): JSX.Element => {
+const FlowViewWithProvider = (props: FlowViewProps): React.ReactNode => {
   return (<>
     <ReactFlowProvider>
       <FlowView {...props} />

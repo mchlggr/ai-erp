@@ -10,37 +10,28 @@ type MermaidParserResponse = {
 
 // window.mermaidInit = false;
 mermaid.initialize({ startOnLoad: false });
-
+const emptyChartResponse: MermaidParserResponse = Object.freeze({ nodes: [], edges: [], direction: "LR" });
 
 export async function parseMermaidChart(graphDefinitionText: string): Promise<MermaidParserResponse> {
+  const d = await mermaid.parse(graphDefinitionText);
+  const a= d.config
+
   const diagram = await mermaid.mermaidAPI.getDiagramFromText(
     graphDefinitionText
   );
-  console.log("/diagram", diagram)
 
   const parseResult = await mermaid.parse(graphDefinitionText);
   const renderResult = await mermaid.render("graphDiv", graphDefinitionText);
-  console.log("/diagram/parseResult", parseResult)
 
-  // renderResult.bindFunctions
+  const parser = diagram.getParser().parser?.yy
 
-  // debugger
+  if(!parser) return emptyChartResponse
 
-  console.log("/diagram", diagram.getParser())
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const parser = (diagram.getParser() as ParserDefinition as any).yy;
 
   const mermaidEdges = (parser.getEdges() as IMermaidEdgeDefinition[]) || [];
   const mermaidNodes = (parser.getVertices() as IMermaidNodeDefinition[]) || [];
 
-  console.log("/mermaidEdges", mermaidEdges)
-  console.log("/mermaidNodes", mermaidNodes)
-  console.log("/parser.getDirection()", parser.getDirection())
-
   const nodes = Object.values(mermaidNodes)
-  console.log("/nodes", nodes)
-  // debugger
 
   return {
     nodes: [...mermaidNodes.values()],

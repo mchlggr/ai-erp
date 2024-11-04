@@ -12,6 +12,7 @@ debug = environment == "development"
 docs_url = "/docs"
 
 origins = [
+  "http://localhost:4200",
   "http://localhost:3000",
   "http://localhost:8000",
 ]

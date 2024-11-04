@@ -118,4 +118,6 @@ const Diagram = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
   );
 };
 
+
+export { Diagram };
 export default Diagram;

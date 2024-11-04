@@ -4,8 +4,8 @@ import {
   extractLabelAndType,
   removeDoubleQuoteInsideBrackets,
   removeDoubleQuoteInsideParentheses,
-  removeMarkdowncode,
-} from './utils';
+  removeMarkdowncode
+} from './mermaid-utils';
 
 export async function parseMermaidCode(
   mermaidCode: string

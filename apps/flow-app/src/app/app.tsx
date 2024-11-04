@@ -1,48 +1,44 @@
-import NxWelcome from './nx-welcome';
-
 import { Route, Routes, Link } from 'react-router-dom';
+import { Diagram } from '@ai-erp/flow-editor';
+import { FlowChat } from '@ai-erp/flow-chat';
+import { useCallback, useState } from 'react';
+
+const sop = `graph TD
+A[Start] --> B(Receive order)
+B --> C{Stock available?}
+C -->|Yes| D[Allocate stock]
+C -->|No| E[Order from supplier]
+D --> F[Pack items]
+F --> G[Label items]
+G --> H[Quality check]
+H --> I[Prepare for shipping]
+I --> J[Dispatch order]
+J --> K[Update inventory]
+K --> L{More orders?}
+L -->|Yes| B
+L -->|No| M[End]
+E --> N{Items received?}
+N -->|Yes| D
+N -->|No| O[Follow up with supplier]
+O --> B
+`;
 
 export function App() {
-  return (
-    <div>
-      <NxWelcome title="flow-app" />
+  const [diagram, setDiagram] = useState(sop);
+  const [isComplete, setIsComplete] = useState(true);
 
-      {/* START: routes */}
-      {/* These routes and navigation have been generated for you */}
-      {/* Feel free to move and update them to fit your needs */}
-      <br />
-      <hr />
-      <br />
-      <div role="navigation">
-        <ul>
-          <li>
-            <Link to="/">Home</Link>
-          </li>
-          <li>
-            <Link to="/page-2">Page 2</Link>
-          </li>
-        </ul>
-      </div>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <div>
-              This is the generated root route.{' '}
-              <Link to="/page-2">Click here for page 2.</Link>
-            </div>
-          }
-        />
-        <Route
-          path="/page-2"
-          element={
-            <div>
-              <Link to="/">Click here to go back to root page.</Link>
-            </div>
-          }
-        />
-      </Routes>
-      {/* END: routes */}
+  const onMessageReceived = useCallback((message: string) => {
+    console.log('onMessageReceived/message', message);
+    setDiagram(message);
+  }, []);
+
+  return (
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <Diagram isComplete={isComplete} mermaidCode={diagram} />
+      <FlowChat
+        onMessageReceived={onMessageReceived}
+        className={'absolute bottom-0 left-0 right-0'}
+      />
     </div>
   );
 }
