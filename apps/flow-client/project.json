@@ -1,0 +1,9 @@
+{
+  "name": "flow-client",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/flow-client/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project flow-client --web",
+  "targets": {}
+}
