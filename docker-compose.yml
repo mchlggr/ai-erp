@@ -1,0 +1,30 @@
+version: '3'
+services:
+
+  flow-server-api:
+    build:
+      context: ./
+      dockerfile: ./apps/flow-server/Dockerfile
+    entrypoint: ["./apps/flow-server/entry-point.sh"]
+    command: tail -f /dev/null
+    ports:
+      - "8000:8000"
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
+    volumes:
+      - ./:/app
+
+  flow-client-proxy:
+    build:
+      context: ./apps/flow-client/
+      dockerfile: Dockerfile
+    volumes:
+      - ./apps/flow-client/nginx.conf:/etc/nginx/conf.d/webapp.conf
+      - ./dist/apps/flow-client:/public
+      - tmp-data:/app/tmp
+    ports:
+      - "80:80"
+
+volumes:
+  tmp-data:
+  log-data:

@@ -15,6 +15,8 @@ origins = [
   "http://localhost:4200",
   "http://localhost:3000",
   "http://localhost:8000",
+  "http://localhost:80",
+  "http://localhost",
 ]
 
 if environment == "development":
@@ -23,13 +25,17 @@ if environment == "development":
     origins.append("http://localhost:9090")
 
 app = FastAPI(debug=debug, docs_url=docs_url)
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins,
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
+
+if environment == "development":
+  # Add CORS middleware for development
+  app.add_middleware(
+      CORSMiddleware,
+      allow_origins=origins,
+      allow_credentials=True,
+      allow_methods=["*"],
+      allow_headers=["*"],
+  )
+
 
 @app.get("/")
 async def redirect_root_to_docs():

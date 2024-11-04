@@ -54,4 +54,4 @@ archive/
 # Nginx public for preview simple server
 public/
 
-.env
+.venv

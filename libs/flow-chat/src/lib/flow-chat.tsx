@@ -49,7 +49,8 @@ export const personasOptions: PersonaOptions = {
 
 const adapterOptions: ChatAdapterOptions<string> = {
   dataTransferMode: 'batch',
-  url: 'http://127.0.0.1:8000/diagram'
+  // url: 'http://127.0.0.1:80/diagram'
+  url: '/diagram'
 };
 
 interface ChatProps {

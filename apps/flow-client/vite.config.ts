@@ -6,7 +6,7 @@ import { nxCopyAssetsPlugin } from '@nx/vite/plugins/nx-copy-assets.plugin';
 
 export default defineConfig({
   root: __dirname,
-  cacheDir: '../../node_modules/.vite/apps/flow-app',
+  cacheDir: '../../node_modules/.vite/apps/flow-client',
 
   server: {
     port: 4200,
@@ -26,7 +26,7 @@ export default defineConfig({
   // },
 
   build: {
-    outDir: '../../dist/apps/flow-app',
+    outDir: '../../dist/apps/flow-client',
     emptyOutDir: true,
     reportCompressedSize: true,
     commonjsOptions: {
