@@ -17,8 +17,10 @@
     "paths": {
       "@ai-erp/flow-chat": ["libs/flow-chat/src/index.ts"],
       "@ai-erp/flow-editor": ["libs/flow-editor/src/index.ts"],
+      "@ai-erp/flow-editor/styles": ["libs/flow-editor/src/styles.css"],
       "@ai-erp/mermaid-flow": ["libs/mermaid-flow/src/index.ts"],
-      "@ai-erp/mermaid-flow/server": ["libs/mermaid-flow/src/server.ts"]
+      "@ai-erp/mermaid-flow/server": ["libs/mermaid-flow/src/server.ts"],
+      "@ai-erp/shared-utils": ["libs/shared-utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -6,7 +6,7 @@ import { useCallback, useState } from 'react';
 const sop = `graph TD
 A[Start] --> B(Receive order)
 B --> C{Stock available?}
-C -->|Yes| D[Allocate stock]
+C -->|YesOtherEdge| D[Allocate stock]
 C -->|No| E[Order from supplier]
 D --> F[Pack items]
 F --> G[Label items]
@@ -33,7 +33,7 @@ export function App() {
   }, []);
 
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div className={'editor-layout'} style={{ width: '100vw', height: '100vh' }}>
       <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
       <FlowChat
         onMessageReceived={onMessageReceived}

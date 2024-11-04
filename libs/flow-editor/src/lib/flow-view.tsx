@@ -14,7 +14,7 @@ import {
   useReactFlow,
   Position, applyEdgeChanges, EdgeChange, Connection, addEdge
 } from '@xyflow/react';
-import FlowEdge from './FlowEdge';
+import FlowEdge from './flow-edge';
 import FlowNode from './flow-node';
 import dagre from 'dagre';
 import { MermaidChartDirection, MermaidEdge, MermaidNode } from '@ai-erp/mermaid-flow';
@@ -41,9 +41,10 @@ const nodeWidth = 250;
 const nodeHeight = 200;
 
 export interface FlowViewProps extends PropsWithChildren {
-  initialNodes: MermaidNode[];
-  initialEdges: MermaidEdge[];
+  initialNodes: Node[];
+  initialEdges: Edge[];
   direction: MermaidChartDirection;
+  className?: string;
 }
 
 const n: Node = {
@@ -58,32 +59,6 @@ const n: Node = {
   type: ''
 };
 
-const transformMermaidNodes = (nodes: MermaidNode[]): Node[] => {
-  return [...nodes.map((node) => {
-    return {
-      id: node.id,
-      data: { label: node.text },
-      type: 'default',
-      // We are using daigre to auto layout the nodes, this is just a placeholder
-      position: { x: 0, y: 0 }
-    };
-  })
-    // introNode
-  ];
-};
-const transformMermaidEdges = (edges: MermaidEdge[]): Edge[] => {
-  return [...edges.map((edge) => {
-    // start: 'A', end: 'B', type: 'arrow_point', text: '', labelType: 'text', …
-    // debugger
-    return {
-      ...edge,
-      id: `${edge.start}-${edge.end}`,
-      source: edge.start,
-      target: edge.end,
-      type: 'default'
-    };
-  })];
-};
 const FlowView = (props: FlowViewProps): React.ReactNode => {
   const { initialNodes, initialEdges } = props;
 
@@ -91,12 +66,12 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
   const reactFlowInstance = useReactFlow();
 
   // shared states
-  const [nodes, setNodes, onNodesChange] = useNodesState(transformMermaidNodes(initialNodes));
-  const [edges, setEdges] = useEdgesState(transformMermaidEdges(initialEdges));
+  const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
+  const [edges, setEdges] = useEdgesState(initialEdges);
 
   useEffect(() => {
-    const tranformedNodes = transformMermaidNodes(initialNodes);
-    const tranformedEdges = transformMermaidEdges(initialEdges);
+    const tranformedNodes = initialNodes
+    const tranformedEdges = initialEdges
 
     setNodes(tranformedNodes);
     setEdges(tranformedEdges);
@@ -118,11 +93,9 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
     edges: Edge[],
     direction: MermaidChartDirection = MermaidChartDirection.TD
   ): { nodes: Node[]; edges: Edge[] } => {
-    // const direction = MermaidChartDirection.TD
     const isHorizontal = direction === MermaidChartDirection.LR;
 
-    // dagreGraph.setGraph({ rankdir: "TB" });
-    dagreGraph.setGraph({});
+    dagreGraph.setGraph({ rankdir: direction});
 
     nodes.forEach((node: Node) => {
       dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
@@ -218,6 +191,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
       {/* Reactflow Board */}
       <ReactFlow
         // fitView
+        className={props.className}
         nodes={nodes}
         edges={edges}
         nodeTypes={nodeTypes}

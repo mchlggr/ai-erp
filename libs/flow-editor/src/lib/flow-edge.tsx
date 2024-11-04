@@ -1,31 +1,35 @@
-import { FC, MutableRefObject, useRef } from "react";
+import { FC, MutableRefObject, useRef } from 'react';
 import {
   EdgeProps,
   getBezierPath,
   EdgeLabelRenderer,
-  BaseEdge,
-} from "@xyflow/react";
+  BaseEdge
+} from '@xyflow/react';
+import { cn } from '@ai-erp/shared-utils';
 
-const FlowEdge: FC<EdgeProps> = ({
-  id,
-  style,
-  sourceX,
-  sourceY,
-  targetX,
-  targetY,
-  sourcePosition,
-  targetPosition,
-  data,
-  markerEnd,
-  markerStart,
-}) => {
+const FlowEdge: FC<EdgeProps> = (props) => {
+  const {
+    id,
+    style,
+    sourceX,
+    sourceY,
+    targetX,
+    targetY,
+    sourcePosition,
+    targetPosition,
+    data,
+    label="",
+    markerEnd,
+    markerStart
+  } = props;
+
   const [edgePath, labelX, labelY] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
     targetX,
     targetY,
-    targetPosition,
+    targetPosition
   });
 
   const contentEditableLabelRef: MutableRefObject<HTMLDivElement | undefined> =
@@ -33,41 +37,42 @@ const FlowEdge: FC<EdgeProps> = ({
 
   function onLabelClick(): void {
     if (contentEditableLabelRef.current) {
-      contentEditableLabelRef.current.contentEditable = "true";
+      contentEditableLabelRef.current.contentEditable = 'true';
       contentEditableLabelRef.current.focus();
     }
   }
 
   function onLabelBlur(): void {
     if (contentEditableLabelRef.current) {
-      contentEditableLabelRef.current.contentEditable = "false";
+      contentEditableLabelRef.current.contentEditable = 'false';
     }
   }
 
   return (
     <>
-      {/* Base Edge */}
       <BaseEdge
         id={id}
         path={edgePath}
         interactionWidth={50}
         style={style}
-        markerEnd={!data.erdReadyToConnect ? markerEnd : ""}
-        markerStart={!data.erdReadyToConnect ? markerStart : ""}
+        markerEnd={markerEnd}
+        markerStart={markerStart}
       />
       <EdgeLabelRenderer>
         <div
           contentEditable="true"
-          onClick={() => onLabelClick()}
+          onClick={onLabelClick}
           style={{
             transform: `translate(-50%, -50%) translate(${labelX}px,${labelY}px)`,
-            display: data.label.length > 0 ? "block" : "none",
+            display: label && label !== "" ? 'block' : 'none'
           }}
-          onBlur={() => onLabelBlur()}
+          onBlur={onLabelBlur}
           suppressContentEditableWarning={true}
-          className="custom-edge-label nodrag nopan"
+          className={cn('custom-edge-label', 'nodrag', 'nopan',
+            'absolute bg-[#1c9eef] text-white rounded text-xs font-medium p-2.5 pointer-events-auto;'
+          )}
         >
-          {data.label}
+          {label}
         </div>
       </EdgeLabelRenderer>
     </>
