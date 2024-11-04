@@ -16,8 +16,8 @@ This project showcases basic integration between an AI model and flowchart tools
 	•	[ ] Voice input to generate and manipulate diagrams
 	•	[ ] Convert process diagram into tiny step-by-step apps
 
-# To run this project locally (YMMV)
-
+## To run this project locally
+These are very high-level steps, not-complete YMMV (if you try to run it, let me know if you have any issues)
 ```
 pnpm install --global nx
 pnpm install
