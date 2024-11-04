@@ -6,6 +6,8 @@ import {
   BaseEdge
 } from '@xyflow/react';
 import { cn } from '@ai-erp/shared-utils';
+import { edgeStrokeColor } from './themes';
+
 
 const FlowEdge: FC<EdgeProps> = (props) => {
   const {
@@ -69,7 +71,7 @@ const FlowEdge: FC<EdgeProps> = (props) => {
           onBlur={onLabelBlur}
           suppressContentEditableWarning={true}
           className={cn('custom-edge-label', 'nodrag', 'nopan',
-            'absolute bg-[#1c9eef] text-white rounded text-xs font-medium p-2.5 pointer-events-auto;'
+            `absolute bg-[${edgeStrokeColor}] text-white rounded text-xs font-medium p-2.5 pointer-events-auto;`
           )}
         >
           {label}

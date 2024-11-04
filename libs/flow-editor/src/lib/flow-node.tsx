@@ -4,8 +4,7 @@ import { Tooltip } from 'react-tooltip';
 import Markdown from 'react-markdown';
 import { MermaidChartDirection } from '@ai-erp/mermaid-flow';
 import { cn } from '@ai-erp/shared-utils';
-
-// import { MermaidChartDirection } from "../../shared/models/mermaid.model";
+import { nodeBackgroundColor, nodeColor, tooltipBackgroundColor, tooltipTextColor } from './themes';
 
 export interface IRFCustomNodeProps {
   id: string;
@@ -35,8 +34,10 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
 
   return (
     <div className={cn('flow-editor-node-handle',
-      'px-8 py-4 min-w-40 text-center rounded-lg border border-grey bg-white'
-    )} onDoubleClick={() => onLabelDoubleClick()}>
+      'px-8 py-4 min-w-40 text-center rounded-lg border',
+      'border-[#e9d8fd]',
+      'bg-[#e9d8fd]',
+    )} onDoubleClick={onLabelDoubleClick}>
       <Handle
         id={id}
         type="target"
@@ -52,6 +53,7 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
           data.layoutDirection === MermaidChartDirection.LR ? 'bottom' : 'right'
         }
         content="Double Click to Edit"
+        style={{ backgroundColor: tooltipBackgroundColor, color: tooltipTextColor }}
       />
       <div
         data-tooltip-id="double-click-to-edit"
@@ -60,9 +62,12 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
         onBlur={onLabelBlur}
         suppressContentEditableWarning={true}
         className={
-          cn("flow-editor-node-label-handle",
-          "bg-white cursor-pointer px-2.5 py-0.75 rounded-full transition-all duration-300 ease-in-out"
-        )}
+          cn('flow-editor-node-label-handle',
+            `bg-[${nodeBackgroundColor}] cursor-pointer px-2.5 py-0.75 rounded-full transition-all duration-300 ease-in-out`,
+            `text-[${nodeColor}]`,
+            'text-[#44347a]',
+            'font-bold'
+          )}
       >
         <Markdown>{data.label}</Markdown>
       </div>

@@ -20,36 +20,28 @@ import {
 import '@xyflow/react/dist/style.css';
 import FlowView from './flow-view';
 import { CustomNode } from './custom-node';
-import { parseMermaidCode } from '../utils/mermaid-utils';
 import { MermaidChartDirection, MermaidEdge, MermaidNode, parseMermaidChart } from '@ai-erp/mermaid-flow';
 import { nanoid } from 'nanoid';
+import { edgeStrokeColor, edgeStrokeWidth } from './themes';
 
 interface DiagramProps {
   mermaidCode?: string;
   isComplete?: boolean;
 }
 
-
-// const initialNodes = [
-//   { id: '1', position: { x: 0, y: 0 }, data: { label: '1' } },
-//   { id: '2', position: { x: 0, y: 100 }, data: { label: '2' } }
-// ];
-// const initialEdges = [{ id: 'e1-2', source: '1', target: '2' }];
-
 const editorEdge= (mermaidEdge: MermaidEdge): Edge => {
   return {
             id: nanoid(),
             source: mermaidEdge.start,
             target: mermaidEdge.end,
-            type: "customEdgeType",
+            type: "flowEditorEdge",
             markerStart: "oneOrMany",
-            // markerEnd: "arrow-end",
-            style: { stroke: "#f6ab6c" },
-            // elementsSelectable: true,
+            style: { stroke: edgeStrokeColor, strokeWidth: edgeStrokeWidth },
             selectable: true,
             label: mermaidEdge.text,
             markerEnd: {
               type: MarkerType.ArrowClosed,
+              color: edgeStrokeColor,
             },
             animated: false,
             data: {
@@ -63,7 +55,7 @@ const editorNode= (mermaidNode: MermaidNode, index: number, direction: MermaidCh
   return {
     id: mermaidNode.id,
     position: { x: index * 200, y: index * 200 },
-    type: "customNodeType",
+    type: "flowEditorNode",
     dragHandle: ".flow-editor-node-handle",
     data: {
       label: mermaidNode.text,
@@ -111,12 +103,6 @@ const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
     async function parse() {
       const { nodes, edges, direction } = await parseMermaidChart(mermaidCode);
 
-      // const tranformedNodes = transformMermaidNodes(nodes);
-      // const tranformedEdges = transformMermaidEdges(edges);
-    // setNodes(tranformedNodes);
-    // setEdges(tranformedEdges);
-
-
       setEdges(edges.map((i) =>editorEdge(i)));
       setNodes(nodes.map((i, index) => editorNode(i, index, direction)));
       setDirection(direction);
@@ -126,19 +112,6 @@ const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
       parse();
     }
   }, [mermaidCode, isComplete]);
-
-  // useEffect(() => {
-  //   async function parse() {
-  //     const { nodes, edges } = await parseMermaidCode(mermaidCode);
-  //     console.log('nodes', nodes);
-  //     console.log('edges', edges);
-  //     setEdges(edges);
-  //     setNodes(nodes);
-  //   }
-  //   if (isComplete && mermaidCode) {
-  //     parse();
-  //   }
-  // }, [mermaidCode, isComplete]);
 
   const onNodesChange = useCallback(
     (changes: NodeChange[]) =>
@@ -172,9 +145,9 @@ const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
 
   return (
     <FlowView
+      // className={'flow-editor bg-[#000]'}
       className={'flow-editor'}
       initialNodes={nodes}
-      // onNodesChange={onNodesChange}
       initialEdges={edges}
       direction={MermaidChartDirection.TD}
       // edges={[
@@ -183,11 +156,7 @@ const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
       // onEdgesChange={onEdgesChange}
       // onConnect={onConnect}
       // nodeTypes={nodeTypes}
-    >
-      {/*<MiniMap/>*/}
-      <Background variant={BackgroundVariant.Dots} gap={12} size={1} />
-      {/*<Controls />*/}
-    </FlowView>
+    />
   );
 };
 
