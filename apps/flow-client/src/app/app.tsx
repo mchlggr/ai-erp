@@ -1,5 +1,5 @@
 import { FlowEditor } from '@ai-erp/flow-editor';
-import { FlowChat } from '@ai-erp/flow-chat';
+import { ChatContextProvider, FlowChat } from '@ai-erp/flow-chat';
 import { useCallback, useState } from 'react';
 import {
   ResizableHandle,
@@ -44,6 +44,7 @@ export function App() {
 
   return (
     <SidebarProvider>
+      {/*<ChatContextProvider>*/}
         <AppSidebar />
         <SidebarInset>
           <AppHeader />
@@ -62,6 +63,7 @@ export function App() {
             </ResizablePanelGroup>
           </div>
         </SidebarInset>
+      {/*</ChatContextProvider>*/}
       </SidebarProvider>
   );
 }

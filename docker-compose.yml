@@ -18,6 +18,8 @@ services:
     build:
       context: ./apps/flow-client/
       dockerfile: Dockerfile
+    environment:
+      VITE_FLOW_SERVER_URL: "/diagram"
     volumes:
       - ./apps/flow-client/nginx.conf:/etc/nginx/conf.d/webapp.conf
       - ./dist/apps/flow-client:/public

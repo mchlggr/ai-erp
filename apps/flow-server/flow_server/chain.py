@@ -14,6 +14,7 @@ _prompt = ChatPromptTemplate.from_messages(
   Only return the flowchart in mermaid JS format with no markdown markers.
   Do NOT include mermaid keyword in the output.
   Topic: """),
+    # MessagesPlaceholder("chat_history"),
     ("human", "{message}"),
   ]
 )
