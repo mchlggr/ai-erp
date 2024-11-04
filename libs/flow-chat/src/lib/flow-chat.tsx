@@ -16,8 +16,8 @@ import '@nlux/highlighter/dark-theme.css';
 
 import '@nlux/themes/unstyled.css';
 import '../theme-variables.css';
-import { CircleUserRound, WandSparkles } from 'lucide-react';
-import { Spinner } from '@ai-erp/shared-ui';
+import { CircleUserRound, Undo2, WandSparkles } from 'lucide-react';
+import { Button, Spinner } from '@ai-erp/shared-ui';
 import { flowServerDiagramUrl } from './chat-adapter';
 
 
@@ -81,42 +81,50 @@ const FlowChat = ({ className, onMessageReceived }: ChatProps) => {
   const messageReceived = useCallback((payload: { message: string[] }) => {
     onMessageReceived(payload.message.join(''));
   }, [onMessageReceived]);
+  const onResetClick = useCallback(() => api.conversation.reset(), [api]);
 
-  return (<div className={cn(className, 'h-full w-full py-8 px-10')}>
-      <AiChat
-        api={api}
-        adapter={adapter}
-        events={{ messageReceived }}
-        className={'flex justify-center items-end w-full h-full'}
-        personaOptions={personasOptions}
-        messageOptions={{ syntaxHighlighter: highlighter }}
-        displayOptions={{
-          colorScheme: 'light',
-          themeId: 'FlowChat'
-        }}
-        composerOptions={{
-          placeholder: 'What do you want to diagram?'
-        }}
-        conversationOptions={{
-          conversationStarters: [
-            {
-              label: 'Generate Simple Sales Flowchart',
-              prompt: 'Generate a flowchart for a high-performance external sales team'
-            },
-            {
-              label: 'Complex Example Flowchart',
-              prompt: 'Generate a flowchart with many steps and branches'
-            },
-            { label: 'For Sell by Owner Steps', prompt: 'What are the steps for selling a house by owner?' }
-          ]
-        }}
-      >
-        <AiChatUI.Loader>
-          <Spinner />
-        </AiChatUI.Loader>
-      </AiChat>
+  return (<div className={cn(className, 'flex flex-1 flex-col h-full w-full py-8 px-10')}>
+    <div className={'flex justify-between items-center mb-8'}>
+      <Button variant={'outline'} onClick={onResetClick}>
+       <Undo2 />
+        Reset
+      </Button>
     </div>
-  );
+    <AiChat
+      api={api}
+      adapter={adapter}
+      events={{ messageReceived }}
+      className={'flex justify-center items-end flex-1'}
+      personaOptions={personasOptions}
+      messageOptions={{ syntaxHighlighter: highlighter }}
+      displayOptions={{
+        colorScheme: 'light',
+        themeId: 'FlowChat'
+      }}
+      composerOptions={{
+        placeholder: 'What do you want to diagram?'
+      }}
+      conversationOptions={{
+        conversationStarters: [
+          {
+            label: 'Generate Simple Sales Flowchart',
+            prompt: 'Generate a flowchart for a high-performance external sales team'
+          },
+          {
+            label: 'Complex Example Flowchart',
+            prompt: 'Generate a flowchart with many steps and branches'
+          },
+          { label: 'For Sell by Owner Steps', prompt: 'What are the steps for selling a house by owner?' }
+        ]
+      }}
+    >
+      <AiChatUI.Loader>
+        <Spinner />
+      </AiChatUI.Loader>
+    </AiChat>
+</div>
+)
+  ;
 };
 
 export { FlowChat };

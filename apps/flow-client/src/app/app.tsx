@@ -43,7 +43,7 @@ export function App() {
   }, []);
 
   return (
-    <SidebarProvider>
+    <SidebarProvider defaultOpen={false} >
       {/*<ChatContextProvider>*/}
         <AppSidebar />
         <SidebarInset>
@@ -51,7 +51,7 @@ export function App() {
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
             <ResizablePanelGroup
               direction={orientation}
-              className={'min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min overflow-hidden border-1 border-primary/20'}
+              className={'min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min overflow-hidden border-2 box-shadow-md'}
             >
               <ResizablePanel>
                 <FlowEditor isComplete={isComplete} mermaidCode={diagram} />
