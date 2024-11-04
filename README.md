@@ -16,8 +16,6 @@ This project showcases basic integration between an AI model and flowchart tools
 	•	[ ] Voice input to generate and manipulate diagrams
 	•	[ ] Convert process diagram into tiny step-by-step apps
 
-Project repository available at: [@mchlggr/flowchart-assistant](https://github.com/mchlggr/flowchart-assistant)
-
 # To run this project locally (YMMV)
 
 ```
