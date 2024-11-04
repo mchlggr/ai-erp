@@ -1,13 +1,11 @@
-// import { clipChatMessagesUpToNTokens } from "@/lib/conversations";
 import {
-  ChatAdapter,
   ChatAdapterExtras,
   ChatItem,
   StreamingAdapterObserver, StreamSend
 } from '@nlux/react';
 
-export const flowServerHost = import.meta.env.VITE_FLOW_SERVER_HOST || ''
-export const flowServerDiagramUrl =  `${flowServerHost}/diagram/stream`;
+export const flowServerHost = import.meta.env.VITE_FLOW_SERVER_HOST || '';
+export const flowServerDiagramUrl = `${flowServerHost}/diagram/stream`;
 
 
 export function charCountToTokens(charCount: number): number {
@@ -37,70 +35,59 @@ function chatHistoryMessageInSingleString(
   return chatHistory.map((m) => {
     return {
       role: m.role,
-      message: typeof m.message === "string" ? m.message : m.message.join(""),
+      message: typeof m.message === 'string' ? m.message : m.message.join('')
     };
   });
 }
 
-// Adapter to send query to the server and receive a stream of chunks as response
-// export const chatAdapter: () => ChatAdapter = () => ({
-//   streamText: async (
-//     prompt: string,
-//     observer: StreamingAdapterObserver,
-//     extras: ChatAdapterExtras
-//   ) => {
-export const chatAdapter: StreamSend<string> = async (
-    prompt: string,
-    observer: StreamingAdapterObserver<string>,
-    extras: ChatAdapterExtras<string>
+export const chatStream: StreamSend<string> = async (
+  prompt: string,
+  observer: StreamingAdapterObserver<string>,
+  extras: ChatAdapterExtras<string>
 ) => {
-    debugger
+  debugger
 
-    const body = {
-      input: { message: prompt },
-      // prompt,
-      // messages: clipChatMessagesUpToNTokens(
-      //   chatHistoryMessageInSingleString(extras.conversationHistory || []),
-      //   200
-      // ).map((m) => ({ role: m.role, content: m.message })),
-    };
-    const response = await fetch(flowServerDiagramUrl, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+  const body = {
+    input: { message: prompt }
+    // prompt,
+    // messages: clipChatMessagesUpToNTokens(
+    //   chatHistoryMessageInSingleString(extras.conversationHistory || []),
+    //   200
+    // ).map((m) => ({ role: m.role, content: m.message })),
+  };
+  const response = await fetch(flowServerDiagramUrl, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
 
-    if (response.status !== 200) {
-      observer.error(new Error("Failed to connect to the server"));
-      return;
-    }
+  if (response.status !== 200) {
+    observer.error(new Error('Failed to connect to the server'));
+    return;
+  }
 
-    if (!response.body) {
-      return;
-    }
+  if (!response.body) {
+    return;
+  }
 
-    // Read a stream of server-sent events
-    // and feed them to the observer as they are being generated
-    const reader = response.body.getReader();
-    const textDecoder = new TextDecoder();
+  // Read a stream of server-sent events
+  // and feed them to the observer as they are being generated
+  const reader = response.body.getReader();
+  const textDecoder = new TextDecoder();
 
-    let doneStream = false;
-    while (!doneStream) {
-      const { value, done } = await reader.read();
-      debugger
-      if (done) {
-        doneStream = true;
-      } else {
-        debugger
-        const content = textDecoder.decode(value);
-        console.log("content/content", content)
-        if (content) {
-          observer.next(content);
-        }
+  let doneStream = false;
+  while (!doneStream) {
+    const { value, done } = await reader.read();
+    if (done) {
+      doneStream = true;
+    } else {
+      const content = textDecoder.decode(value);
+      console.log('content/content', content);
+      if (content) {
+        observer.next(content);
       }
     }
-    debugger
-    observer.complete();
   }
-// });
+  observer.complete();
+};
 
