@@ -129,12 +129,6 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
     onNodesChange(changes);
   };
 
-  // console.log("flow-view/nodeTypes", nodeTypes)
-  // console.log("flow-view/edgeTypes", edgeTypes)
-  console.log('flow-view/nodes', nodes);
-  console.log('flow-view/edges', edges);
-
-
   const onEdgesChange = useCallback(
     (changes: EdgeChange[]) =>
       setEdges((eds) => applyEdgeChanges(changes, eds)),

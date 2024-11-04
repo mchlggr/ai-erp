@@ -1,4 +1,3 @@
-import { Route, Routes, Link } from 'react-router-dom';
 import { FlowEditor } from '@ai-erp/flow-editor';
 import { FlowChat } from '@ai-erp/flow-chat';
 import { useCallback, useState } from 'react';
@@ -6,16 +5,19 @@ import {
   ResizableHandle,
   ResizablePanel,
   ResizablePanelGroup,
-  Separator,
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarInset,
-  SidebarProvider, SidebarTrigger
+  SidebarProvider,
+  SidebarTrigger
 } from '@ai-erp/shared-ui';
 import Introduction from '../components/introduction';
+import AppSidebar from '../components/app-sidebar';
+import AppHeader from '../components/app-header';
 
+// TODO: move to personas and chat examples
 const sop = `graph TD
 A[Start] --> B(Receive order)
 B --> C{Stock available?}
@@ -36,22 +38,6 @@ N -->|No| O[Follow up with supplier]
 O --> B
 `;
 
-const AppHeader = () => {
-  return <header className="flex h-16 shrink-0 items-center gap-2">
-    <div className="flex items-center gap-2 px-4 justify-between w-full">
-      <div>
-        <SidebarTrigger className="-ml-1" />
-      </div>
-      <div>
-        <h1 className="text-md font-bold text-foreground">Flowchart Assistant</h1>
-      </div>
-      <div>
-        <Introduction />
-      </div>
-    </div>
-  </header>;
-};
-
 export function App() {
   const [diagram, setDiagram] = useState(sop);
   const [isComplete, setIsComplete] = useState(true);
@@ -64,16 +50,7 @@ export function App() {
 
   return (<>
       <SidebarProvider>
-        <Sidebar side="left" collapsible="offcanvas" variant="sidebar">
-          <SidebarHeader className="flex flex-row h-16 shrink-0 items-center gap-4 px-4">
-            <h1 className="text-md font-bold text-foreground">Flowcharts</h1>
-          </SidebarHeader>
-          <SidebarContent className={'px-4'}>
-            Login to save and revisit previous chart chats!
-          </SidebarContent>
-          <SidebarFooter className={'px-4'}>
-          </SidebarFooter>
-        </Sidebar>
+        <AppSidebar />
         <SidebarInset>
           <AppHeader />
           <div className="flex flex-1 flex-col gap-4 p-4 pt-0">

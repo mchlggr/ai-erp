@@ -34,10 +34,12 @@ const FlowNode = memo(({ id, data, isConnectable }: IRFCustomNodeProps) => {
 
   return (
     <div className={cn('flow-editor-node-handle',
-      'px-8 py-4 min-w-40 text-center rounded-lg border',
+      'px-8 py-4 min-w-40 text-center rounded-lg border shadow-md',
       'border-[#e9d8fd]',
-      'bg-[#e9d8fd]',
-    )} onDoubleClick={onLabelDoubleClick}>
+      'bg-[#e9d8fd]'
+    )} onDoubleClick={onLabelDoubleClick}
+         style={{ boxShadow: '4px 4px 0px 0px rgba(69, 53, 122, 0.8)' }}
+    >
       <Handle
         id={id}
         type="target"
