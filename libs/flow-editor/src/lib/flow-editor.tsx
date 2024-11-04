@@ -29,41 +29,49 @@ interface DiagramProps {
   isComplete?: boolean;
 }
 
-const editorEdge= (mermaidEdge: MermaidEdge): Edge => {
+export const makeEdge = (data: Edge): Edge => {
+  const { id, ...rest } = data
   return {
-            id: nanoid(),
-            source: mermaidEdge.start,
-            target: mermaidEdge.end,
-            type: "flowEditorEdge",
-            markerStart: "oneOrMany",
-            style: { stroke: edgeStrokeColor, strokeWidth: edgeStrokeWidth },
-            selectable: true,
-            label: mermaidEdge.text,
-            markerEnd: {
-              type: MarkerType.ArrowClosed,
-              color: edgeStrokeColor,
-            },
-            animated: false,
-            data: {
-              label: mermaidEdge.text,
-              raw: mermaidEdge,
-            },
-          }
-}
+    type: 'flowEditorEdge',
+    markerStart: 'oneOrMany',
+    style: { stroke: edgeStrokeColor, strokeWidth: edgeStrokeWidth, strokeDasharray: '0' },
+    selectable: true,
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+      color: edgeStrokeColor
+    },
+    animated: false,
+    id,
+    ...rest
+  };
+};
 
-const editorNode= (mermaidNode: MermaidNode, index: number, direction: MermaidChartDirection): Node => {
+const editorEdge = (mermaidEdge: MermaidEdge): Edge => {
+  return makeEdge({
+    id: nanoid(),
+    source: mermaidEdge.start,
+    target: mermaidEdge.end,
+    label: mermaidEdge.text,
+    data: {
+      label: mermaidEdge.text,
+      raw: mermaidEdge
+    }
+  });
+};
+
+const editorNode = (mermaidNode: MermaidNode, index: number, direction: MermaidChartDirection): Node => {
   return {
     id: mermaidNode.id,
     position: { x: index * 200, y: index * 200 },
-    type: "flowEditorNode",
-    dragHandle: ".flow-editor-node-handle",
     data: {
       label: mermaidNode.text,
       raw: mermaidNode,
-      layoutDirection: direction,
+      layoutDirection: direction
     },
-  }
-}
+    type: 'flowEditorNode',
+    dragHandle: '.flow-editor-node-handle',
+  };
+};
 
 const transformMermaidNodes = (nodes: MermaidNode[]): Node[] => {
   return [...nodes.map((node) => {
@@ -93,7 +101,6 @@ const transformMermaidEdges = (edges: MermaidEdge[]): Edge[] => {
 };
 
 
-
 const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
   const [nodes, setNodes] = useState<Node[]>([]);
   const [edges, setEdges] = useState<Edge[]>([]);
@@ -103,7 +110,7 @@ const FlowEditor = ({ mermaidCode = '', isComplete = false }: DiagramProps) => {
     async function parse() {
       const { nodes, edges, direction } = await parseMermaidChart(mermaidCode);
 
-      setEdges(edges.map((i) =>editorEdge(i)));
+      setEdges(edges.map((i) => editorEdge(i)));
       setNodes(nodes.map((i, index) => editorNode(i, index, direction)));
       setDirection(direction);
     }

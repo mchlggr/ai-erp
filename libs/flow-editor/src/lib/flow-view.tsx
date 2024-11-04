@@ -21,6 +21,8 @@ import { MermaidChartDirection, MermaidEdge, MermaidNode } from '@ai-erp/mermaid
 import { CustomNode } from './custom-node';
 import { backgroundColor, backgroundDotColor } from './themes';
 import type { OnConnectEnd } from '@xyflow/system';
+import { nanoid } from 'nanoid';
+import { makeEdge } from '@ai-erp/flow-editor';
 
 const nodeTypes = {
   flowEditorNode: FlowNode,
@@ -37,9 +39,9 @@ const edgeTypes = {
 const nodeWidth = 250;
 const nodeHeight = 200;
 
-let id = 1;
-const getId = () => `${id++}`;
-const nodeOrigin = [0.5, 0];
+// let id = 1;
+// const getId = () => `${id++}`;
+// const nodeOrigin = [0.5, 0];
 
 export interface FlowViewProps extends PropsWithChildren, ReactFlowProps {
   initialNodes: Node[];
@@ -150,23 +152,30 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
       // when a connection is dropped on the pane it's not valid
       if (!connectionState.isValid) {
         // we need to remove the wrapper bounds, in order to get the correct position
-        const id = getId();
+        const id = nanoid();
         const { clientX, clientY } =
           'changedTouches' in event ? event.changedTouches[0] : event;
-        const newNode = {
+        const nextNode: Node = {
           id,
           position: screenToFlowPosition({
             x: clientX,
             y: clientY
           }),
-          data: { label: `Node ${id}` },
+          type: "flowEditorNode",
+          dragHandle: ".flow-editor-node-handle",
+          data: {
+            // label: `Node ${id}`,
+            label: `New Node Double-Click to Edit`,
+          },
           origin: [0.5, 0.0]
         };
 
-        setNodes((nds) => nds.concat(newNode));
-        setEdges((eds) =>
-          eds.concat({ id, source: connectionState.fromNode.id, target: id })
-        );
+        const source = connectionState?.fromNode?.id
+        if(!source) throw new Error("Missing Connection State Source Node")
+        const nextEdge = makeEdge({ id, source, target: id })
+
+        setNodes((nds) => nds.concat(nextNode));
+        setEdges((eds) => eds.concat(nextEdge));
       }
     },
     [screenToFlowPosition]
@@ -174,41 +183,9 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
 
   return (
     <>
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        xmlnsXlink="http://www.w3.org/1999/xlink"
-        version="1.1"
-        fill="transparent"
-        stroke="black"
-        strokeWidth="4"
-        width="24"
-        height="24"
-        viewBox="0 0 100 100"
-        className="absolute"
-      >
-        {/* arrow-end */}
-        {/*    <marker*/}
-        {/*      id="arrow-end"*/}
-        {/*      viewBox="0 0 100 100"*/}
-        {/*      markerHeight={20}*/}
-        {/*      markerWidth={20}*/}
-        {/*      refX={50}*/}
-        {/*      refY={50}*/}
-        {/*    >*/}
-        {/*      /!* source: https://www.svgrepo.com/svg/108052/arrow-down-filled-triangle *!/*/}
-        {/*      <path*/}
-        {/*        fill="#f6ab6c"*/}
-        {/*        stroke="#f6ab6c"*/}
-        {/*        d="M0.561,20.971l45.951,57.605c0.76,0.951,2.367,0.951,3.127,0l45.956-57.609c0.547-0.689,0.709-1.716,0.414-2.61*/}
-        {/*c-0.061-0.187-0.129-0.33-0.186-0.437c-0.351-0.65-1.025-1.056-1.765-1.056H2.093c-0.736,0-1.414,0.405-1.762,1.056*/}
-        {/*c-0.059,0.109-0.127,0.253-0.184,0.426C-0.15,19.251,0.011,20.28,0.561,20.971z"*/}
-        {/*      />*/}
-        {/*    </marker>*/}
-      </svg>
-
-      {/* Reactflow Board */}
       <ReactFlow
         fitView
+        fitViewOptions={{ padding: 2 }}
         className={props.className}
         nodes={nodes}
         edges={edges}
@@ -228,6 +205,7 @@ const FlowView = (props: FlowViewProps): React.ReactNode => {
         {...props}
       >
         {/*<MiniMap zoomable pannable className="minimap" />*/}
+        {/*<ZoomIn className="absolute right-2 bottom-2" />*/}
         <Background
           gap={24}
           size={2}

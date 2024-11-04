@@ -20,11 +20,10 @@ export function Introduction() {
       <DialogContent>
         <DialogHeader>
           <DialogTitle className={'text-2xl mb-2'}>AI Flowchart Assistant</DialogTitle>
-          <DialogDescription className={'text-black'}>
+          <DialogDescription className={'text-black space-y-4'}>
             <p>
               A simple project experimenting with how to build an AI-powered flowchart diagramming assistant.
             </p>
-            <br/>
             <h2 className="text-lg font-bold">
               Overview
             </h2>
@@ -32,16 +31,18 @@ export function Introduction() {
               This project showcases basic integration between an AI model and flowchart creation tools, allowing
               developers to experiment with natural language processing for diagram generation.
             </p>
-            <br />
             <h2 className="text-lg font-bold">Features</h2>
             <ul className={'gap-y-2'}>
               {features.map(([done, description], index) => (
                 <li key={index}>
-                  <input type="checkbox" checked={done} disabled className="mr-2" />
+                  <input type="checkbox" checked={!!done} disabled className="mr-2" />
                   {description}
                 </li>
               ))}
             </ul>
+           <p>
+             Project repository available at:&nbsp;<a href={"#"}>@mchlggr/flow-chat</a>
+           </p>
           </DialogDescription>
         </DialogHeader>
       </DialogContent>

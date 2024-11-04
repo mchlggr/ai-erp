@@ -2,3 +2,21 @@
 @import "@xyflow/react/dist/base.css";
 @import "@xyflow/react/dist/style.css";
 
+:root {
+  --edge-stroke-color: #805ad5;
+}
+
+.react-flow .react-flow__handle {
+  width: 16px;
+  height: 16px;
+  border-radius: 6px;
+  border-width: 2px;
+  background-color: var(--edge-stroke-color);
+}
+
+.react-flow .react-flow__edge path,
+.react-flow__connectionline path {
+  stroke-width: 4px;
+  stroke: var(--edge-stroke-color);
+  stroke-dasharray: 10;
+}
